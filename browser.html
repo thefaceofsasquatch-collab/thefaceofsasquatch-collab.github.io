@@ -423,7 +423,7 @@ function renderTable() {
     const desc = s.description ? `<span class="encounter-desc">${esc(s.description)}</span>` : '';
     const behaviors = s.behaviors.slice(0,4).map(b =>
       `<span class="chip">${esc(b)}</span>`).join('');
-    const strange = s.strangeness.slice(0,3).map(st =>
+    const strange = s.strangeness.map(st =>
       `<span class="chip strange">${esc(st)}</span>`).join('');
     const subj = s.subjects.length ? `<div style="font-size:10px;color:var(--muted);margin-top:4px">${esc(s.subjects[0])}</div>` : '';
     return `<tr>
