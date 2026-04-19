@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Face of Sasquatch — April 2026 Report (To Date)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+  :root {
+    --dark:#0d1117; --card:#161b22; --border:#30363d;
+    --green:#3fb950; --amber:#d29922; --red:#f85149;
+    --blue:#58a6ff; --purple:#bc8cff; --muted:#8b949e;
+    --text:#e6edf3; --accent:#c9a227;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;padding:24px 16px 48px}
+  .header{text-align:center;padding:32px 16px 24px;border-bottom:1px solid var(--border);margin-bottom:28px}
+  .header .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .header h1{font-family:'Cinzel',serif;font-size:clamp(22px,5vw,40px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:1px}
+  .header h1 span{color:var(--accent)}
+  .header .subtitle{margin-top:10px;font-size:13px;color:var(--muted);letter-spacing:1px}
+  .period-badge{display:inline-block;margin-top:14px;background:#21262d;border:1px solid var(--border);border-radius:20px;padding:5px 18px;font-size:12px;color:var(--accent);font-weight:600;letter-spacing:1px}
+  .live-badge{display:inline-block;margin-top:8px;margin-left:8px;background:#1a3a1a;border:1px solid #3fb950;border-radius:20px;padding:5px 14px;font-size:11px;color:#3fb950;font-weight:600;letter-spacing:1px}
+  .grid{display:grid;gap:16px;max-width:1400px;margin:0 auto}
+  .grid-4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .grid-2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+  .grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px}
+  .card-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:600}
+  .stat-big{font-family:'Cinzel',serif;font-size:clamp(32px,6vw,52px);font-weight:900;line-height:1;color:#fff}
+  .stat-label{font-size:12px;color:var(--muted);margin-top:6px}
+  .stat-sub{font-size:11px;color:var(--accent);margin-top:4px;font-weight:600}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .bar-label{font-size:12px;color:var(--text);min-width:170px;flex-shrink:0}
+  .bar-track{flex:1;background:#21262d;border-radius:4px;height:10px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:4px;transition:width .3s}
+  .bar-val{font-size:12px;color:var(--muted);min-width:28px;text-align:right}
+  .tone-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .tone-box{background:#21262d;border-radius:8px;padding:14px;text-align:center}
+  .tone-num{font-family:'Cinzel',serif;font-size:28px;font-weight:900}
+  .tone-lbl{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+  .tone-pct{font-size:11px;font-weight:600;margin-top:2px}
+  .seg-bar-wrap{margin:12px 0 6px}
+  .seg-bar{display:flex;height:22px;border-radius:6px;overflow:hidden;width:100%}
+  .seg-bar div{height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;transition:width .3s}
+  .seg-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .seg-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+  .seg-lbl{font-size:11px;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th{text-align:left;padding:8px 10px;color:var(--muted);font-weight:600;font-size:11px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+  td{padding:8px 10px;border-bottom:1px solid #21262d;vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  .chip{display:inline-block;background:#21262d;border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--text);margin:3px}
+  .hair-chip{display:inline-block;border-radius:20px;padding:4px 12px;font-size:11px;color:#fff;margin:3px}
+  .aom-card{background:linear-gradient(135deg,#1a1f2e,#161b22);border:1px solid var(--accent);border-radius:10px;padding:24px}
+  .aom-card h3{font-family:'Cinzel',serif;font-size:18px;color:var(--accent);margin-bottom:8px}
+  .aom-card .meta{font-size:11px;color:var(--muted);margin-bottom:12px;letter-spacing:1px}
+  .aom-card p{font-size:13px;line-height:1.7;color:var(--text)}
+  .paywall{background:linear-gradient(135deg,#1a1208,#161b22);border:1px solid var(--amber);border-radius:10px;padding:28px;text-align:center;margin-top:16px}
+  .paywall h3{font-family:'Cinzel',serif;font-size:20px;color:var(--amber);margin-bottom:10px}
+  .paywall p{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+  .btn{display:inline-block;background:var(--amber);color:#0d1117;font-weight:700;font-size:14px;padding:12px 28px;border-radius:8px;text-decoration:none;letter-spacing:1px}
+  .section-title{font-family:'Cinzel',serif;font-size:16px;color:var(--accent);margin:28px 0 14px;max-width:1400px;margin-left:auto;margin-right:auto;padding:0 4px}
+  .full-width{max-width:1400px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Intelligence Report</div>
+  <h1>The Face of <span>Sasquatch</span></h1>
+  <div class="subtitle">Cross-Channel Encounter Data Analysis · 11 Channels Monitored</div>
+  <span class="period-badge">April 2026 — To Date</span>
+  <span class="live-badge">⬤ LIVE</span>
+</div>
+
+<!-- KPI ROW -->
+<div class="grid grid-4" style="max-width:1400px;margin:0 auto 20px">
+  <div class="card">
+    <div class="card-title">Videos Analyzed</div>
+    <div class="stat-big">68</div>
+    <div class="stat-label">Total videos processed</div>
+    <div class="stat-sub">54 contain encounters</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Reports Logged</div>
+    <div class="stat-big">172</div>
+    <div class="stat-label">Individual sighting accounts</div>
+    <div class="stat-sub">April 1–17, 2026</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Subjects Described</div>
+    <div class="stat-big">151</div>
+    <div class="stat-label">Individual entities logged</div>
+    <div class="stat-sub">Physical descriptions extracted</div>
+  </div>
+  <div class="card">
+    <div class="card-title">Contact Events</div>
+    <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Physical%20Contact" target="_blank" style="text-decoration:none">
+      <div class="stat-big" style="color:#f85149">10</div>
+    </a>
+    <div class="stat-label">Direct interaction reported</div>
+    <div class="stat-sub">Physical contact, communication, or gifting</div>
+  </div>
+</div>
+
+<!-- TONE -->
+<div class="section-title">Encounter Tone Analysis</div>
+<div class="grid grid-2" style="max-width:1400px;margin:0 auto 20px">
+  <div class="card">
+    <div class="card-title">Tone Distribution</div>
+    <div class="tone-grid">
+      <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?tone=Negative" target="_blank" style="text-decoration:none;display:block">
+      <div class="tone-box" style="border-left:3px solid var(--red)">
+        <div class="tone-num" style="color:var(--red)">113</div>
+        <div class="tone-lbl">Negative</div>
+        <div class="tone-pct" style="color:var(--red)">66%</div>
+      </div></a>
+      <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?tone=Mixed" target="_blank" style="text-decoration:none;display:block">
+      <div class="tone-box" style="border-left:3px solid var(--amber)">
+        <div class="tone-num" style="color:var(--amber)">29</div>
+        <div class="tone-lbl">Mixed</div>
+        <div class="tone-pct" style="color:var(--amber)">17%</div>
+      </div></a>
+      <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?tone=Neutral" target="_blank" style="text-decoration:none;display:block">
+      <div class="tone-box" style="border-left:3px solid var(--muted)">
+        <div class="tone-num" style="color:var(--muted)">26</div>
+        <div class="tone-lbl">Neutral</div>
+        <div class="tone-pct" style="color:var(--muted)">15%</div>
+      </div></a>
+      <a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?tone=Positive" target="_blank" style="text-decoration:none;display:block">
+      <div class="tone-box" style="border-left:3px solid var(--green)">
+        <div class="tone-num" style="color:var(--green)">4</div>
+        <div class="tone-lbl">Positive</div>
+        <div class="tone-pct" style="color:var(--green)">2%</div>
+      </div></a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Tone Breakdown Bar</div>
+    <div class="seg-bar-wrap">
+      <div class="seg-bar">
+        <div style="width:66%;background:#f85149">66%</div>
+        <div style="width:17%;background:#d29922">17%</div>
+        <div style="width:15%;background:#8b949e">15%</div>
+        <div style="width:2%;background:#3fb950">2%</div>
+      </div>
+    </div>
+    <div class="seg-legend">
+      <span><span class="seg-dot" style="background:#f85149"></span><span class="seg-lbl">Negative (113)</span></span>
+      <span><span class="seg-dot" style="background:#d29922"></span><span class="seg-lbl">Mixed (29)</span></span>
+      <span><span class="seg-dot" style="background:#8b949e"></span><span class="seg-lbl">Neutral (26)</span></span>
+      <span><span class="seg-dot" style="background:#3fb950"></span><span class="seg-lbl">Positive (4)</span></span>
+    </div>
+    <p style="margin-top:16px;font-size:12px;color:var(--muted);line-height:1.6">
+      <strong style="color:var(--red)">66%</strong> of all April encounters were classified as Negative —
+      involving territorial aggression, stalking, or intense fear from the witness.
+    </p>
+  </div>
+</div>
+
+<!-- BEHAVIORS + STRANGENESS -->
+<div class="section-title">Behaviors &amp; High Strangeness</div>
+<div class="grid grid-2" style="max-width:1400px;margin:0 auto 20px">
+  <div class="card">
+    <div class="card-title">Top Reported Behaviors</div>
+    
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Vocalizations" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Vocalizations</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">24</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Rock%20/%20Object%20Throwing" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Rock / Object Throwing</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:50%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">12</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Tree%20Knocking%20/%20Wood%20Knocks" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Tree Knocking / Wood Knocks</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:38%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">9</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Stalking%20/%20Surveillance" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Stalking / Surveillance</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:33%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">8</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Fleeing" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Fleeing</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:29%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">7</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Tree%20/%20Branch%20Manipulation" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Tree / Branch Manipulation</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:21%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">5</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Bipedal%20Locomotion" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Bipedal Locomotion</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:21%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">5</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Window%20Peering" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Window Peering</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:17%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">4</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Foraging%20/%20Food%20Theft" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Foraging / Food Theft</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:17%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">4</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Footprints%20/%20Tracks" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Footprints / Tracks</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:17%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">4</span>
+        </div>
+  </div>
+  <div class="card">
+    <div class="card-title">High Strangeness Claims</div>
+    
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Vanishing%20/%20Cloaking" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Vanishing / Cloaking</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">26</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Orbs%20/%20Strange%20Lights" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Orbs / Strange Lights</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:65%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">17</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Mindspeak%20/%20Telepathy" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Mindspeak / Telepathy</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:58%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">15</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Glowing%20Eyes" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Glowing Eyes</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:38%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">10</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Electronic%20Failure" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Electronic Failure</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:27%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">7</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Portals" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Portals</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:15%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">4</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Missing%20Time" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Missing Time</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:12%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">3</span>
+        </div>
+  </div>
+</div>
+
+<!-- REGIONS + EVIDENCE -->
+<div class="section-title">Regional Distribution &amp; Evidence</div>
+<div class="grid grid-2" style="max-width:1400px;margin:0 auto 20px">
+  <div class="card">
+    <div class="card-title">Sightings by Region</div>
+    
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=Australia%20/%20NZ" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Australia / NZ</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:#3fb950"></div>
+          </div>
+          <span class="bar-val">57</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=Unknown%20/%20Not%20stated" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Unknown / Not stated</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:79%;background:#58a6ff"></div>
+          </div>
+          <span class="bar-val">45</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=Pacific%20Northwest" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Pacific Northwest</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:46%;background:#d29922"></div>
+          </div>
+          <span class="bar-val">26</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=Midwest%20/%20Great%20Lakes" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Midwest / Great Lakes</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:33%;background:#f85149"></div>
+          </div>
+          <span class="bar-val">19</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=West" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">West</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:18%;background:#bc8cff"></div>
+          </div>
+          <span class="bar-val">10</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=South" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">South</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:11%;background:#39d353"></div>
+          </div>
+          <span class="bar-val">6</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=Canada" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Canada</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:7%;background:#ff9f43"></div>
+          </div>
+          <span class="bar-val">4</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=Appalachia" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Appalachia</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:7%;background:#a29bfe"></div>
+          </div>
+          <span class="bar-val">4</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?region=Northeast" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Northeast</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:2%;background:#fd79a8"></div>
+          </div>
+          <span class="bar-val">1</span>
+        </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Evidence Types Reported</div>
+    
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Eyewitness-Only%20Reports" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Eyewitness-Only Reports</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:#58a6ff"></div>
+          </div>
+          <span class="bar-val">104</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Physical%20Evidence" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Physical Evidence</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:21%;background:#58a6ff"></div>
+          </div>
+          <span class="bar-val">22</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Photo%20Evidence" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Photo Evidence</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:19%;background:#58a6ff"></div>
+          </div>
+          <span class="bar-val">20</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Audio%20Evidence" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Audio Evidence</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:10%;background:#58a6ff"></div>
+          </div>
+          <span class="bar-val">10</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label"><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?kw=Video%20Evidence" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted #555">Video Evidence</a></span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:6%;background:#58a6ff"></div>
+          </div>
+          <span class="bar-val">6</span>
+        </div>
+  </div>
+</div>
+
+<!-- SUBJECT PROFILE -->
+<div class="section-title">Subject Profile</div>
+<div class="grid grid-2" style="max-width:1400px;margin:0 auto 20px">
+  <div class="card">
+    <div class="card-title">Age Distribution</div>
+    <div class="seg-bar-wrap">
+      <div class="seg-bar">
+        <div style="width:46%;background:#3fb950">46%</div>
+        <div style="width:10%;background:#d29922">10%</div>
+        <div style="width:44%;background:#30363d">44%</div>
+      </div>
+    </div>
+    <div class="seg-legend">
+      <span><span class="seg-dot" style="background:#3fb950"></span><span class="seg-lbl">Adult (69)</span></span>
+      <span><span class="seg-dot" style="background:#d29922"></span><span class="seg-lbl">Juvenile (15)</span></span>
+      <span><span class="seg-dot" style="background:#30363d;border:1px solid #555"></span><span class="seg-lbl">Unknown (67)</span></span>
+    </div>
+    <div style="margin-top:16px">
+      <div class="card-title">Hair / Coat Color</div>
+      <div style="margin-top:8px"><span class="hair-chip" style="background:#2d3436;border:1px solid #444">Black <strong>16</strong></span><span class="hair-chip" style="background:#6d4c41;border:1px solid #444">Brown / Dark Brown <strong>15</strong></span><span class="hair-chip" style="background:#c0392b;border:1px solid #444">Red / Auburn <strong>7</strong></span><span class="hair-chip" style="background:#b2bec3;border:1px solid #444">Gray / White <strong>6</strong></span><span class="hair-chip" style="background:#636e72;border:1px solid #444">Salt & Pepper <strong>2</strong></span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Gender Distribution</div>
+    <div style="border:1px dashed var(--border);border-radius:8px;padding:20px;text-align:center;margin-top:8px">
+      <div style="font-size:13px;color:var(--muted);line-height:1.6">
+        Gender extraction not yet tracked in current pipeline.<br>
+        <span style="color:var(--accent);font-size:11px;font-weight:600">Coming in next pipeline update</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHANNELS -->
+<div class="section-title">Channel Breakdown</div>
+<div class="full-width" style="margin-bottom:20px">
+  <div class="card">
+    <div class="card-title">All Monitored Channels — April 2026</div>
+    <table>
+      <thead><tr><th>Channel</th><th>Videos</th><th>Sightings</th><th>Activity</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=Yowie%20Central" target="_blank" style="color:#58a6ff;text-decoration:none">Yowie Central</a></td>
+          <td style="text-align:center">29</td>
+          <td style="text-align:center">87</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:100%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=Bigfoot%20Society" target="_blank" style="color:#58a6ff;text-decoration:none">Bigfoot Society</a></td>
+          <td style="text-align:center">13</td>
+          <td style="text-align:center">36</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:41%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=SASQUATCH%20THEORY" target="_blank" style="color:#58a6ff;text-decoration:none">SASQUATCH THEORY</a></td>
+          <td style="text-align:center">5</td>
+          <td style="text-align:center">13</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:15%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=the%20round%20table%20of%20knowledge" target="_blank" style="color:#58a6ff;text-decoration:none">the round table of knowledge</a></td>
+          <td style="text-align:center">6</td>
+          <td style="text-align:center">10</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:11%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=Linda%20Eastburn" target="_blank" style="color:#58a6ff;text-decoration:none">Linda Eastburn</a></td>
+          <td style="text-align:center">3</td>
+          <td style="text-align:center">9</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:10%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=Bigfoot%20Crossroads" target="_blank" style="color:#58a6ff;text-decoration:none">Bigfoot Crossroads</a></td>
+          <td style="text-align:center">3</td>
+          <td style="text-align:center">6</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:7%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=Buckeye%20Bigfoot" target="_blank" style="color:#58a6ff;text-decoration:none">Buckeye Bigfoot</a></td>
+          <td style="text-align:center">4</td>
+          <td style="text-align:center">5</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:6%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=A%20Flash%20Of%20Beauty%3A%20Bigfoot%20Revealed" target="_blank" style="color:#58a6ff;text-decoration:none">A Flash Of Beauty: Bigfoot Revealed</a></td>
+          <td style="text-align:center">3</td>
+          <td style="text-align:center">3</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:3%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=WJ%20Sheehan" target="_blank" style="color:#58a6ff;text-decoration:none">WJ Sheehan</a></td>
+          <td style="text-align:center">1</td>
+          <td style="text-align:center">2</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:2%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><a href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html?channel=My%20Bigfoot%20Sighting" target="_blank" style="color:#58a6ff;text-decoration:none">My Bigfoot Sighting</a></td>
+          <td style="text-align:center">1</td>
+          <td style="text-align:center">1</td>
+          <td style="width:160px">
+            <div class="bar-track" style="height:8px">
+              <div class="bar-fill" style="width:1%;background:#3fb950;height:8px"></div>
+            </div>
+          </td>
+        </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TOP VIDEOS -->
+<div class="section-title">Top Encounter Videos</div>
+<div class="full-width" style="margin-bottom:20px">
+  <div class="card">
+    <div class="card-title">Ranked by Sighting Count</div>
+    <table>
+      <thead><tr><th>#</th><th>Title</th><th>Channel</th><th>Date</th><th>Sightings</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="color:#8b949e;text-align:center">1</td>
+          <td><a href="https://www.youtube.com/watch?v=BJnrY5ZdlDA" target="_blank" style="color:#58a6ff;text-decoration:none">BIGFOOT PEERING THROUGH MY WINDOW IN OHIO | CRACKED FINGERNAILS AND BL…</a></td>
+          <td style="color:#8b949e;font-size:11px">SASQUATCH THEORY</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-02</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">8</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">2</td>
+          <td><a href="https://www.youtube.com/watch?v=IDtJqgO90bA" target="_blank" style="color:#58a6ff;text-decoration:none">It's Smarter than We Realized | Honobia | Oklahoma | Bigfoot Society 1…</a></td>
+          <td style="color:#8b949e;font-size:11px">Bigfoot Society</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-03</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">7</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">3</td>
+          <td><a href="https://www.youtube.com/watch?v=QVwx0iV4Fh4" target="_blank" style="color:#58a6ff;text-decoration:none">Yowie Central - Episode 110 – Dogman & Yowie Encounters | John Kershaw</a></td>
+          <td style="color:#8b949e;font-size:11px">Yowie Central</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-16</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">7</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">4</td>
+          <td><a href="https://www.youtube.com/watch?v=dPtZq378yt0" target="_blank" style="color:#58a6ff;text-decoration:none">Yowie Central - Episode 91 – Yowies & Goatman?! | Gary The Finderer</a></td>
+          <td style="color:#8b949e;font-size:11px">Yowie Central</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-01</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">7</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">5</td>
+          <td><a href="https://www.youtube.com/watch?v=imZZ59LEynA" target="_blank" style="color:#58a6ff;text-decoration:none">He Lived 25 Years in Bigfoot Territory… Then It Came Into His House | …</a></td>
+          <td style="color:#8b949e;font-size:11px">Bigfoot Society</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-15</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">7</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">6</td>
+          <td><a href="https://www.youtube.com/watch?v=oSIP7c9ARg0" target="_blank" style="color:#58a6ff;text-decoration:none">Yowie Central - Episode 103 -A Wildman Changed Her Life | Deborah Hats…</a></td>
+          <td style="color:#8b949e;font-size:11px">Yowie Central</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-09</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">7</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">7</td>
+          <td><a href="https://www.youtube.com/watch?v=9-7O591cwBc" target="_blank" style="color:#58a6ff;text-decoration:none">Yowie Central - Episode 93 – Yowie Attack, UFOs & CE5 | Dean Harrison …</a></td>
+          <td style="color:#8b949e;font-size:11px">Yowie Central</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-01</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">6</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">8</td>
+          <td><a href="https://www.youtube.com/watch?v=FGYUhxxMS5g" target="_blank" style="color:#58a6ff;text-decoration:none">Yowie Central - Episode 89 – Sasquatch & Yowie Research | Creek Devil …</a></td>
+          <td style="color:#8b949e;font-size:11px">Yowie Central</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-01</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">6</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">9</td>
+          <td><a href="https://www.youtube.com/watch?v=4XFEB7FkJ34" target="_blank" style="color:#58a6ff;text-decoration:none">Yowie Central - Episode 86 – Terrifying Yowie Encounter & Goblin-Like …</a></td>
+          <td style="color:#8b949e;font-size:11px">Yowie Central</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-01</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">5</td>
+        </tr>
+        <tr>
+          <td style="color:#8b949e;text-align:center">10</td>
+          <td><a href="https://www.youtube.com/watch?v=Ne9GbmwiM7c" target="_blank" style="color:#58a6ff;text-decoration:none">DOGMAN AT THE LAKE OF THE OZARKS | THIS MIRRORS WHAT HAPPENED AT THE L…</a></td>
+          <td style="color:#8b949e;font-size:11px">SASQUATCH THEORY</td>
+          <td style="color:#8b949e;font-size:11px">2026-04-05</td>
+          <td style="text-align:center;color:#d29922;font-weight:700">5</td>
+        </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PATTERNS -->
+<div class="section-title">Recurring Behavioral Patterns</div>
+<div class="full-width" style="margin-bottom:20px">
+  <div class="card">
+    <div class="card-title">Cross-Channel Signature Patterns Detected This Month</div>
+    <div style="margin-top:8px"><span class="chip">Sense of dread preceding encounters</span><span class="chip">Rock and stick formations in active areas</span><span class="chip">Creatures dropping low to evade detection</span><span class="chip">Intense sudden fear</span><span class="chip">Missing time</span><span class="chip">Thermal imaging sightings</span><span class="chip">Campsite/cabin approaches</span><span class="chip">Object throwing as deterrent</span><span class="chip">Seeking shelter during severe weather</span><span class="chip">Strong odor</span><span class="chip">Bedding area found</span><span class="chip">Proximity to logging areas</span><span class="chip">Feeling of being watched prior to sighting</span><span class="chip">Smooth gliding walk</span><span class="chip">Cone-shaped head</span><span class="chip">Audio/physical harassment without visual confirmation</span><span class="chip">Subject walking in river</span><span class="chip">Looking through windows</span><span class="chip">Proximity to human dwellings</span><span class="chip">Long-term habituation and gifting</span><span class="chip">Frequent photography of subjects</span><span class="chip">Multiple entity types on same property</span><span class="chip">Claims of shape-shifting</span><span class="chip">High strangeness with physical encounters</span><span class="chip">Oz Factor (sudden silence/paralysis)</span><span class="chip">UFO/CE5 connection</span><span class="chip">Urban setting</span><span class="chip">Late night sighting</span><span class="chip">Bipedal running</span><span class="chip">Intricate stick symbols in multiple locations</span><span class="chip">Rock/stick structures combined</span><span class="chip">Activity increasing at night</span><span class="chip">Camouflaging as trees/stumps</span><span class="chip">Nocturnal roadside observation</span><span class="chip">Returning to same locations</span><span class="chip">Tree snapping at ~8ft height</span><span class="chip">Escalating aggression at campsites</span><span class="chip">Vocalizations for coordination/warning</span><span class="chip">Nighttime encounters</span><span class="chip">Vehicle involved</span></div>
+  </div>
+</div>
+
+<!-- ACCOUNT OF THE MONTH -->
+<div class="section-title">Account of the Month</div>
+<div class="full-width" style="margin-bottom:20px">
+  <div class="aom-card">
+    <h3>The Window. The Fingernails. The Eyes.</h3>
+    <div class="meta">SASQUATCH THEORY · Ohio · April 2026</div>
+    <p>
+      A witness in Ohio reports hearing something outside their window late at night.
+      When they looked, a massive face was peering in — hands resting on the window frame,
+      cracked black fingernails visible against the glass. The eyes were described as solid black,
+      unblinking, and intelligent. The subject did not flee when the witness moved.
+      It watched. Then it was gone.
+    </p>
+    <p style="margin-top:12px;font-size:12px;color:var(--muted)">
+      This account was the most-sighted video in the April dataset with the highest engagement score.
+      The window-peering behavior appears as a recurring pattern across 4 separate reports this month.
+    </p>
+    <a href="https://www.youtube.com/watch?v=BJnrY5ZdlDA" target="_blank" style="display:inline-block;margin-top:16px;color:var(--blue);font-size:12px;text-decoration:none">
+      ▶ Watch the full account →
+    </a>
+  </div>
+</div>
+
+<!-- PAYWALL -->
+<div class="full-width">
+  <div class="paywall">
+    <h3>Dig Deeper Into the Data</h3>
+    <p>
+      The full encounter database is open to free subscribers — search all logged encounters by behavior, region, tone, and high strangeness.<br>
+      Compare channel profiles side by side. Deep-link directly to the exact moment in every video.<br>
+      <span style="font-size:11px;color:var(--muted)">Database covers 10 monitored channels starting March 2026 and grows with every monthly update.</span>
+    </p>
+    <a class="btn" href="https://files.manuscdn.com/user_upload_by_module/session_file/310519663511973786/BGFnfrxRvCQvFBHn.html" target="_blank" style="margin-right:12px">
+      Explore the Full Database →
+    </a>
+    <a class="btn" href="https://thefaceofsasquatchofficial.substack.com/subscribe" target="_blank" style="background:#21262d;color:var(--accent);border:1px solid var(--accent)">
+      Subscribe &amp; Unlock →
+    </a>
+  </div>
+</div>
+
+</body>
+</html>
