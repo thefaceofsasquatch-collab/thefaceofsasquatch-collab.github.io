@@ -28,10 +28,13 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min
 .badge{display:inline-block;background:#21262d;border:1px solid var(--border);border-radius:20px;padding:4px 14px;font-size:11px;color:var(--accent);font-weight:600;margin-top:8px}
 
 /* ── NAV TABS ── */
-.nav{display:flex;gap:0;border-bottom:1px solid var(--border);max-width:1400px;margin:0 auto;padding:0 16px}
+.nav{display:flex;gap:0;border-bottom:1px solid var(--border);max-width:1400px;margin:0 auto;padding:0 16px;align-items:center;justify-content:space-between}
+.nav-left{display:flex;gap:0}
 .nav-btn{padding:12px 24px;font-size:13px;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;letter-spacing:.5px;transition:color .2s,border-color .2s}
 .nav-btn:hover{color:var(--text)}
 .nav-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.nav-dashboard-link{padding:8px 18px;font-size:12px;font-weight:700;color:#0d1117;background:var(--accent);border:none;border-radius:6px;cursor:pointer;letter-spacing:.5px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-right:4px;white-space:nowrap;transition:opacity .2s}
+.nav-dashboard-link:hover{opacity:.85}
 
 /* ── VIEWS ── */
 .view{display:none;max-width:1400px;margin:0 auto;padding:20px 16px 48px}
@@ -149,9 +152,12 @@ td{padding:10px 12px;vertical-align:top}
 </div>
 
 <div class="nav">
-  <button class="nav-btn active" onclick="showView('sightings',this)">Sightings Database</button>
-  <button class="nav-btn" onclick="showView('profiles',this)">Channel Profiles</button>
-  <button class="nav-btn" onclick="showView('compare',this)">Channel Comparison</button>
+  <div class="nav-left">
+    <button class="nav-btn active" onclick="showView('sightings',this)">Sightings Database</button>
+    <button class="nav-btn" onclick="showView('profiles',this)">Channel Profiles</button>
+    <button class="nav-btn" onclick="showView('compare',this)">Channel Comparison</button>
+  </div>
+  <a class="nav-dashboard-link" href="https://thefaceofsasquatch-collab.github.io/" target="_blank">← Dashboard</a>
 </div>
 
 <!-- ════════════════════════════════════════════════════════
