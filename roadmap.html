@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Face of Sasquatch — Product Roadmap</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+  :root {
+    --dark:#0d1117; --card:#161b22; --border:#30363d;
+    --text:#e6edf3; --muted:#8b949e; --accent:#f0b429;
+    --neg:#e05252; --pos:#3fb950; --neu:#58a6ff; --mix:#d29922;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--dark); color:var(--text); font-family:'Inter',sans-serif; font-size:14px; line-height:1.6; }
+
+  /* ── Header ── */
+  .header { text-align:center; padding:48px 24px 32px; border-bottom:1px solid var(--border); }
+  .eyebrow { font-size:11px; letter-spacing:3px; color:var(--accent); font-weight:600; text-transform:uppercase; margin-bottom:10px; }
+  .header h1 { font-family:'Cinzel',serif; font-size:clamp(28px,5vw,48px); font-weight:900; color:var(--text); line-height:1.1; }
+  .header h1 span { color:var(--accent); }
+  .header .subtitle { color:var(--muted); font-size:13px; margin-top:8px; }
+  .period-badge { display:inline-block; margin-top:14px; background:#21262d; border:1px solid var(--border); border-radius:20px; padding:5px 18px; font-size:12px; color:var(--accent); font-weight:600; letter-spacing:1px; }
+
+  /* ── Layout ── */
+  .container { max-width:900px; margin:0 auto; padding:32px 16px 64px; }
+  .section-title { font-size:11px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; font-weight:600; margin:36px 0 14px; padding-bottom:6px; border-bottom:1px solid var(--border); }
+
+  /* ── Cards ── */
+  .card { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:20px 24px; margin-bottom:12px; }
+  .card-header { display:flex; align-items:flex-start; gap:14px; }
+  .card-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+  .card-body { flex:1; }
+  .card-title { font-weight:700; font-size:15px; color:var(--text); margin-bottom:4px; }
+  .card-desc { color:var(--muted); font-size:13px; line-height:1.6; }
+  .card-meta { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* ── Status badges ── */
+  .badge { display:inline-block; border-radius:12px; padding:2px 10px; font-size:11px; font-weight:600; letter-spacing:0.5px; }
+  .badge-planned   { background:#21262d; color:var(--muted); border:1px solid var(--border); }
+  .badge-low       { background:#1a2d1a; color:var(--pos); border:1px solid #2d5a2d; }
+  .badge-medium    { background:#2d2a1a; color:var(--mix); border:1px solid #5a4d1a; }
+  .badge-high      { background:#2d1a1a; color:var(--neg); border:1px solid #5a2d2d; }
+  .badge-done      { background:#1a2d1a; color:var(--pos); border:1px solid #2d5a2d; }
+  .badge-feature   { background:#1a1f2d; color:var(--neu); border:1px solid #1a3a5a; }
+  .badge-infra     { background:#2a1a2d; color:#c084fc; border:1px solid #4a1a5a; }
+  .badge-monetize  { background:#2d2a1a; color:var(--accent); border:1px solid #5a4d1a; }
+
+  /* ── Completed section ── */
+  .card.done { opacity:0.6; }
+  .card.done .card-title { text-decoration:line-through; color:var(--muted); }
+
+  /* ── Nav ── */
+  .nav-back { display:inline-flex; align-items:center; gap:6px; background:#21262d; border:1px solid var(--border); border-radius:6px; padding:7px 14px; font-size:13px; font-weight:600; color:var(--accent); text-decoration:none; margin-bottom:28px; }
+  .nav-back:hover { background:#30363d; }
+
+  /* ── Legend ── */
+  .legend { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); }
+
+  /* ── Last updated ── */
+  .last-updated { text-align:center; color:var(--muted); font-size:12px; margin-top:48px; padding-top:24px; border-top:1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Product Roadmap</div>
+  <h1>The Face of <span>Sasquatch</span></h1>
+  <div class="subtitle">Planned Upgrades &amp; Feature Backlog</div>
+  <span class="period-badge">Last Updated: April 19, 2026</span>
+</div>
+
+<div class="container">
+
+  <a class="nav-back" href="/">← Dashboard</a>
+
+  <div class="legend">
+    <div class="legend-item"><span class="badge badge-low">Low Effort</span></div>
+    <div class="legend-item"><span class="badge badge-medium">Medium Effort</span></div>
+    <div class="legend-item"><span class="badge badge-high">High Effort</span></div>
+    <div class="legend-item"><span class="badge badge-feature">Feature</span></div>
+    <div class="legend-item"><span class="badge badge-infra">Infrastructure</span></div>
+    <div class="legend-item"><span class="badge badge-monetize">Monetization</span></div>
+    <div class="legend-item"><span class="badge badge-done">✓ Completed</span></div>
+  </div>
+
+  <!-- ── PRIORITY UPGRADES ── -->
+  <div class="section-title">Priority Upgrades</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">📅</div>
+      <div class="card-body">
+        <div class="card-title">URL Date Parameters — Filter by Date Range via URL</div>
+        <div class="card-desc">
+          Allow the Dashboard and Encounter Browser to accept <code>?from=YYYY-MM-DD&amp;to=YYYY-MM-DD</code> URL parameters.
+          With no parameters, the page shows all data from oldest to newest video. With parameters, every stat, chart,
+          and sighting list is filtered to that exact window. Shared links always reflect the exact date range they were
+          built for — no ambiguity, no stale labels.
+          <br><br>
+          <strong>Encounter Browser:</strong> Low effort — data is already embedded, filter system already exists.<br>
+          <strong>Dashboard:</strong> Medium effort — stats need to be migrated from hardcoded numbers to live JS calculations from embedded data.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-feature">Feature</span>
+          <span class="badge badge-medium">Medium Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">📦</div>
+      <div class="card-body">
+        <div class="card-title">Report Archive — Versioned Past Reports at Permanent URLs</div>
+        <div class="card-desc">
+          Each published report is saved as a dated snapshot (e.g. <code>/reports/2026-april/</code>) and remains
+          accessible forever at its own permanent URL. An archive index page at <code>/reports/</code> lists all
+          published reports with their date ranges and links. Becomes genuinely valuable once 6–12 months of data exist
+          and month-over-month comparison is meaningful.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-feature">Feature</span>
+          <span class="badge badge-medium">Medium Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🎲</div>
+      <div class="card-body">
+        <div class="card-title">Random Sampling Pipeline — Process N Videos Per Month Across All Channels</div>
+        <div class="card-desc">
+          Expand the channel list and process a configurable number of videos per monthly run (e.g. 40–60) selected
+          randomly from all unprocessed videos across all channels. Prevents runaway API costs while keeping the
+          database growing with broad cross-channel coverage. A single budget number in the config controls monthly spend.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-infra">Infrastructure</span>
+          <span class="badge badge-medium">Medium Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MONETIZATION ── -->
+  <div class="section-title">Monetization</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">✅</div>
+      <div class="card-body">
+        <div class="card-title">Verified Complete Archive — Paid Channel Sponsorship Tier</div>
+        <div class="card-desc">
+          YouTube channels pay a recurring sponsorship fee to have every video in their archive processed and included
+          in the database. Their channel profile displays a "Verified Complete Archive" badge visible to all readers.
+          Pricing covers per-video processing cost plus margin. Ongoing monthly arrangement (not one-time) since new
+          videos are published continuously. Editorial disclosure note on sponsored profile cards.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-monetize">Monetization</span>
+          <span class="badge badge-low">Low Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">💳</div>
+      <div class="card-body">
+        <div class="card-title">Subscriber Tiers — Gated Access via Substack</div>
+        <div class="card-desc">
+          Four-tier model: Free (dashboard summary only), Field Notes $7/mo (full encounter browser + channel profiles),
+          Deep Tracker $15/mo (PDF export, raw data, early access), Channel Sponsor (custom, complete archive indexing).
+          The Encounter Browser at <code>browser.html</code> is the primary paid hook — genuinely useful and not
+          replicable elsewhere.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-monetize">Monetization</span>
+          <span class="badge badge-medium">Medium Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">📣</div>
+      <div class="card-body">
+        <div class="card-title">Sponsor Section in Dashboard — Named Paid Sponsors</div>
+        <div class="card-desc">
+          A dedicated "Sponsors" section at the bottom of the dashboard listing paid sponsors with their name, logo,
+          and a brief line. Keeps the editorial content clean while giving sponsors visible placement in every
+          published report.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-monetize">Monetization</span>
+          <span class="badge badge-low">Low Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTENT & EDITORIAL ── -->
+  <div class="section-title">Content &amp; Editorial</div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🎨</div>
+      <div class="card-body">
+        <div class="card-title">Art Integration — Featured Encounter Illustration Per Report</div>
+        <div class="card-desc">
+          Each monthly report features one original illustration of the month's most compelling encounter — full-width
+          hero image above the Account of the Month section, with a caption linking to the encounter in the browser.
+          Makes each report feel like a unique artifact. Art prints could become a paid subscriber add-on.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-feature">Feature</span>
+          <span class="badge badge-low">Low Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🖼️</div>
+      <div class="card-body">
+        <div class="card-title">Behavior &amp; Strangeness Icons — Custom Illustrated Tag Icons</div>
+        <div class="card-desc">
+          Custom illustrated icons for each behavior and strangeness category used as small inline icons next to
+          chip tags in the sightings table and profile cards. Significant visual upgrade — something no other
+          cryptid data tool does.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-feature">Feature</span>
+          <span class="badge badge-medium">Medium Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">🎙️</div>
+      <div class="card-body">
+        <div class="card-title">Podcast Concepts — Data-Driven Episode Formats</div>
+        <div class="card-desc">
+          Three formats worth developing: <strong>"The Pattern"</strong> — each episode traces one behavior or
+          strangeness category across channels using database evidence; <strong>"Channel Deep Dive"</strong> — full
+          profile of one channel's encounter history; <strong>"The Monthly Brief"</strong> — audio version of the
+          monthly report, shareable as a Substack podcast episode.
+        </div>
+        <div class="card-meta">
+          <span class="badge badge-feature">Feature</span>
+          <span class="badge badge-medium">Medium Effort</span>
+          <span class="badge badge-planned">Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMPLETED ── -->
+  <div class="section-title">Completed</div>
+
+  <div class="card done">
+    <div class="card-header">
+      <div class="card-icon">✓</div>
+      <div class="card-body">
+        <div class="card-title">GitHub Pages Deployment — Permanent Fixed URLs</div>
+        <div class="card-desc">Dashboard and Encounter Browser deployed to permanent GitHub Pages URLs. Monthly update script redeploys in place — URLs never change.</div>
+        <div class="card-meta"><span class="badge badge-done">✓ Completed April 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card done">
+    <div class="card-header">
+      <div class="card-icon">✓</div>
+      <div class="card-body">
+        <div class="card-title">Channel Profile Drill-Down — Clickable Items Filter Sightings</div>
+        <div class="card-desc">Every behavior, strangeness, region, and tone segment in Channel Profiles and Channel Comparison is clickable and drills into a filtered sightings view for that channel + detail combination.</div>
+        <div class="card-meta"><span class="badge badge-done">✓ Completed April 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card done">
+    <div class="card-header">
+      <div class="card-icon">✓</div>
+      <div class="card-body">
+        <div class="card-title">Duplicate Sighting Removal — Database Deduplication</div>
+        <div class="card-desc">272 duplicate sighting rows removed from the database. Trigger added to prevent future duplicates. All dashboard and browser stats corrected to reflect 151 clean unique encounters.</div>
+        <div class="card-meta"><span class="badge badge-done">✓ Completed April 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card done">
+    <div class="card-header">
+      <div class="card-icon">✓</div>
+      <div class="card-body">
+        <div class="card-title">Dynamic Date Range Badge — Actual Data Span in Dashboard Header</div>
+        <div class="card-desc">Dashboard period badge now shows the actual oldest-to-newest video date range from the live database. Updates automatically with each monthly rebuild. No more hardcoded "April 2026 — To Date" language.</div>
+        <div class="card-meta"><span class="badge badge-done">✓ Completed April 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card done">
+    <div class="card-header">
+      <div class="card-icon">✓</div>
+      <div class="card-body">
+        <div class="card-title">All Dashboard Stats Live from Database</div>
+        <div class="card-desc">Replaced hardcoded aggregate script with database-driven regeneration. All tone, behavior, strangeness, region, channel, and top-video counts now derived from the live deduplicated database on every build.</div>
+        <div class="card-meta"><span class="badge badge-done">✓ Completed April 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card done">
+    <div class="card-header">
+      <div class="card-icon">✓</div>
+      <div class="card-body">
+        <div class="card-title">Bidirectional Navigation — Dashboard ↔ Encounter Browser</div>
+        <div class="card-desc">Every stat card, tone box, behavior, region, and channel on the dashboard deep-links into the filtered encounter browser. The browser has a gold "← Dashboard" button returning users to the dashboard.</div>
+        <div class="card-meta"><span class="badge badge-done">✓ Completed April 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="last-updated">
+    The Face of Sasquatch — Roadmap · Last updated April 19, 2026 ·
+    <a href="/" style="color:var(--accent);text-decoration:none;">← Back to Dashboard</a>
+  </div>
+
+</div>
+</body>
+</html>
