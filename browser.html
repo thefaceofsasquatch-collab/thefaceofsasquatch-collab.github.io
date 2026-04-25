@@ -140,6 +140,37 @@ td{padding:10px 12px;vertical-align:top}
 
 /* ── EMPTY STATE ── */
 .empty{text-align:center;padding:48px 16px;color:var(--muted);font-size:14px}
+
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:700px){
+  .nav{flex-wrap:wrap;gap:6px;padding:8px 12px}
+  .nav-btn{font-size:11px;padding:7px 10px}
+  .controls{flex-direction:column;gap:8px}
+  .search-wrap{min-width:100%;width:100%}
+  select{width:100%}
+  /* Hide the desktop table on mobile */
+  .table-wrap table{display:none}
+  /* Show mobile cards instead */
+  .mobile-cards{display:block !important}
+  .encounter-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+  .ec-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+  .ec-title a{color:var(--blue);text-decoration:none;font-weight:600;font-size:13px;line-height:1.4}
+  .ec-meta{font-size:10px;color:var(--muted);margin-top:3px}
+  .ec-desc{font-size:12px;color:#adbac7;line-height:1.6;font-style:italic;margin:8px 0}
+  .ec-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+  .ec-section-label{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-top:10px;margin-bottom:4px;font-weight:600}
+  .ec-links{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap}
+  .ec-links a{font-size:11px;font-weight:600;text-decoration:none}
+  .ec-links a.watch{color:var(--blue)}
+  .ec-links a.deep{color:var(--amber)}
+  .ch-grid{grid-template-columns:1fr}
+  .compare-grid{grid-template-columns:1fr}
+  .compare-controls{flex-direction:column}
+  .compare-controls select{width:100%}
+}
+@media(min-width:701px){
+  .mobile-cards{display:none !important}
+}
 </style>
 </head>
 <body>
@@ -203,6 +234,7 @@ td{padding:10px 12px;vertical-align:top}
       <tbody id="sightings-body"></tbody>
     </table>
   </div>
+  <div class="mobile-cards" id="mobile-cards" style="display:none"></div>
   <div class="empty" id="empty-msg" style="display:none">No encounters match your filters.</div>
   <div class="pagination" id="pagination"></div>
 </div>
@@ -440,6 +472,32 @@ function renderTable() {
       <td><div class="chip-list">${behaviors}</div></td>
       <td><div class="chip-list">${strange}</div></td>
     </tr>`;
+  }).join('');
+
+  // ── Mobile card layout ──────────────────────────────────────────
+  const mobileDiv = document.getElementById('mobile-cards');
+  mobileDiv.innerHTML = slice.map(s => {
+    const deepLink = s.timestamp_url || s.url;
+    const behaviors = s.behaviors.map(b => `<span class="chip">${esc(b)}</span>`).join('');
+    const strange   = s.strangeness.map(st => `<span class="chip strange">${esc(st)}</span>`).join('');
+    const subj = s.subjects.length ? `<div style="font-size:10px;color:var(--muted);margin-top:4px">${esc(s.subjects[0])}</div>` : '';
+    return `<div class="encounter-card">
+      <div class="ec-header">
+        <div class="ec-title">
+          <a href="${esc(s.url)}" target="_blank">${esc(truncate(s.title,80))}</a>
+          <div class="ec-meta">${esc(s.channel)} &middot; ${esc(s.date)} &middot; ${esc(s.region)}</div>
+        </div>
+        <span class="tone-pill ${toneClass(s.tone)}" style="flex-shrink:0">${esc(s.tone)}</span>
+      </div>
+      ${s.description ? `<div class="ec-desc">${esc(s.description)}</div>` : ''}
+      ${subj}
+      ${behaviors ? `<div class="ec-section-label">Behaviors</div><div class="ec-chips">${behaviors}</div>` : ''}
+      ${strange   ? `<div class="ec-section-label">High Strangeness</div><div class="ec-chips">${strange}</div>` : ''}
+      <div class="ec-links">
+        <a class="watch" href="${esc(s.url)}" target="_blank">▶ Watch</a>
+        ${deepLink && deepLink !== s.url ? `<a class="deep" href="${esc(deepLink)}" target="_blank">⏱ Deep Link</a>` : ''}
+      </div>
+    </div>`;
   }).join('');
 
   renderPagination(pages);
