@@ -77,6 +77,9 @@ td{padding:10px 12px;vertical-align:top}
 .chip-list{display:flex;flex-wrap:wrap;gap:3px;max-width:220px}
 .chip{display:inline-block;background:#21262d;border:1px solid var(--border);border-radius:10px;padding:2px 7px;font-size:10px;color:var(--text)}
 .chip.strange{background:#1e1030;border-color:#4a2080;color:#bc8cff}
+.chip-clickable{cursor:pointer;transition:border-color .15s,background .15s}
+.chip-clickable:hover{border-color:var(--accent);background:#2d2a1a;color:var(--accent)}
+.chip.strange.chip-clickable:hover{border-color:#bc8cff;background:#2a1a40;color:#e0b8ff}
 .deep-link{display:inline-block;margin-top:4px;font-size:10px;color:var(--amber);text-decoration:none;font-weight:600}
 .deep-link:hover{text-decoration:underline}
 
@@ -370,6 +373,41 @@ function drillFromRow(el) {
   drillTo(ch, type, val);
 }
 
+// ── GLOBAL TAG FILTER ─────────────────────────────────────────────────────────
+// Called when a behavior or strangeness chip is clicked anywhere in the sightings
+// table or mobile cards. Filters ALL channels for that tag.
+function filterByTag(type, value) {
+  // Switch to sightings view
+  const navBtns = document.querySelectorAll('.nav-btn');
+  let sightingsBtn = null;
+  navBtns.forEach(b => { if (b.textContent.trim() === 'Sightings Database') sightingsBtn = b; });
+  showView('sightings', sightingsBtn);
+
+  // Clear all filters
+  document.getElementById('kw-search').value = '';
+  document.getElementById('f-channel').selectedIndex = 0;
+  document.getElementById('f-tone').selectedIndex = 0;
+  document.getElementById('f-region').selectedIndex = 0;
+  document.getElementById('f-month').selectedIndex = 0;
+  document.getElementById('f-strange').selectedIndex = 0;
+
+  if (type === 'tone') {
+    const tnSel = document.getElementById('f-tone');
+    const tnMatch = Array.from(tnSel.options).find(o => o.value.toLowerCase() === value.toLowerCase());
+    if (tnMatch) tnSel.value = tnMatch.value;
+  } else if (type === 'region') {
+    const rgSel = document.getElementById('f-region');
+    const rgMatch = Array.from(rgSel.options).find(o => o.value.toLowerCase() === value.toLowerCase());
+    if (rgMatch) rgSel.value = rgMatch.value;
+  } else {
+    // behavior or strangeness — use keyword search
+    document.getElementById('kw-search').value = value;
+  }
+
+  applyFilters();
+  document.getElementById('view-sightings').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
 // ── SIGHTINGS TABLE ───────────────────────────────────────────────────────────
 let filtered   = [...SIGHTINGS];
 let sortCol    = 'date';
@@ -454,9 +492,9 @@ function renderTable() {
     const linkLabel = s.timestamp_url ? '▶ Deep Link' : '▶ Watch';
     const desc = s.description ? `<span class="encounter-desc">${esc(s.description)}</span>` : '';
     const behaviors = s.behaviors.slice(0,4).map(b =>
-      `<span class="chip">${esc(b)}</span>`).join('');
+      `<span class="chip chip-clickable" onclick="filterByTag('behavior','${escAttr(b)}')" title="Filter all encounters: ${escAttr(b)}">${esc(b)}</span>`).join('');
     const strange = s.strangeness.map(st =>
-      `<span class="chip strange">${esc(st)}</span>`).join('');
+      `<span class="chip strange chip-clickable" onclick="filterByTag('strangeness','${escAttr(st)}')" title="Filter all encounters: ${escAttr(st)}">${esc(st)}</span>`).join('');
     const subj = s.subjects.length ? `<div style="font-size:10px;color:var(--muted);margin-top:4px">${esc(s.subjects[0])}</div>` : '';
     return `<tr>
       <td style="white-space:nowrap;color:var(--muted)">${esc(s.date)}</td>
@@ -478,8 +516,8 @@ function renderTable() {
   const mobileDiv = document.getElementById('mobile-cards');
   mobileDiv.innerHTML = slice.map(s => {
     const deepLink = s.timestamp_url || s.url;
-    const behaviors = s.behaviors.map(b => `<span class="chip">${esc(b)}</span>`).join('');
-    const strange   = s.strangeness.map(st => `<span class="chip strange">${esc(st)}</span>`).join('');
+    const behaviors = s.behaviors.map(b => `<span class="chip chip-clickable" onclick="filterByTag('behavior','${escAttr(b)}')" title="Filter all encounters: ${escAttr(b)}">${esc(b)}</span>`).join('');
+    const strange   = s.strangeness.map(st => `<span class="chip strange chip-clickable" onclick="filterByTag('strangeness','${escAttr(st)}')" title="Filter all encounters: ${escAttr(st)}">${esc(st)}</span>`).join('');
     const subj = s.subjects.length ? `<div style="font-size:10px;color:var(--muted);margin-top:4px">${esc(s.subjects[0])}</div>` : '';
     return `<div class="encounter-card">
       <div class="ec-header">
