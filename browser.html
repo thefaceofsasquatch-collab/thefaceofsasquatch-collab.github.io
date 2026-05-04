@@ -415,6 +415,9 @@ let sortDir    = -1; // -1 = desc, 1 = asc
 let currentPage = 1;
 const PAGE_SIZE = 50;
 
+// behaviors_any: pipe-separated list of canonical behavior names to match (any-of)
+let _behaviorsAnyFilter = [];
+
 function applyFilters() {
   const kw  = document.getElementById('kw-search').value.trim().toLowerCase();
   const ch  = document.getElementById('f-channel').value;
@@ -431,6 +434,12 @@ function applyFilters() {
     if (mo && s.month !== mo) return false;
     if (st === 'yes' && s.strangeness.length === 0) return false;
     if (st === 'no'  && s.strangeness.length  > 0) return false;
+    // behaviors_any: sighting must have at least one of the required behavior tags
+    if (_behaviorsAnyFilter.length > 0) {
+      const bLower = (s.behaviors || []).map(b => b.toLowerCase());
+      const match = _behaviorsAnyFilter.some(req => bLower.some(b => b.includes(req)));
+      if (!match) return false;
+    }
     return true;
   });
 
@@ -769,7 +778,7 @@ function truncate(s, n) {
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 // Parse URL query parameters and pre-set filters for deep linking
-// Supported params: tone, channel, region, month, strange, kw
+// Supported params: tone, channel, region, month, strange, kw, behaviors (pipe-separated canonical names)
 (function applyURLParams() {
   const params = new URLSearchParams(window.location.search);
   const setVal = (id, val) => {
@@ -788,6 +797,11 @@ function truncate(s, n) {
   setVal('f-strange', params.get('strange'));
   const kw = params.get('kw');
   if (kw) document.getElementById('kw-search').value = kw;
+  // behaviors param: pipe-separated list, e.g. ?behaviors=Physical+Contact|Physical+Attack
+  const bParam = params.get('behaviors');
+  if (bParam) {
+    _behaviorsAnyFilter = bParam.split('|').map(b => b.trim().toLowerCase()).filter(Boolean);
+  }
 })();
 
 applyFilters();
