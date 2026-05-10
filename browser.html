@@ -51,6 +51,9 @@ select:focus{border-color:var(--accent)}
 .count-badge{font-size:12px;color:var(--muted);white-space:nowrap}
 .clear-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:8px 14px;color:var(--muted);font-size:12px;cursor:pointer}
 .clear-btn:hover{color:var(--text);border-color:var(--text)}
+.share-btn{background:none;border:1px solid var(--gold);border-radius:8px;padding:8px 14px;color:var(--gold);font-size:12px;cursor:pointer;display:none}
+.share-btn:hover{background:var(--gold);color:#000}
+.share-btn.copied{background:var(--gold);color:#000}
 
 /* ── TABLE ── */
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;max-height:calc(100vh - 200px);overflow-y:auto}
@@ -218,6 +221,7 @@ td{padding:10px 12px;vertical-align:top}
       <option value="no">No High Strangeness</option>
     </select>
     <button class="clear-btn" onclick="clearFilters()">Clear</button>
+    <button class="share-btn" id="share-btn" onclick="shareSearch()" title="Copy shareable link to clipboard">&#128279; Share Results</button>
     <span class="count-badge" id="result-count"></span>
   </div>
 
@@ -476,7 +480,35 @@ function clearFilters() {
   ['f-channel','f-tone','f-region','f-month','f-strange'].forEach(id => {
     document.getElementById(id).selectedIndex = 0;
   });
+  _behaviorsAnyFilter = [];
   applyFilters();
+}
+
+function shareSearch() {
+  const kw  = document.getElementById('kw-search').value.trim();
+  const ch  = document.getElementById('f-channel').value;
+  const tn  = document.getElementById('f-tone').value;
+  const rg  = document.getElementById('f-region').value;
+  const mo  = document.getElementById('f-month').value;
+  const st  = document.getElementById('f-strange').value;
+  const p   = new URLSearchParams();
+  if (kw) p.set('kw', kw);
+  if (ch) p.set('channel', ch);
+  if (tn) p.set('tone', tn);
+  if (rg) p.set('region', rg);
+  if (mo) p.set('month', mo);
+  if (st) p.set('strange', st);
+  if (_behaviorsAnyFilter.length > 0) p.set('behaviors', _behaviorsAnyFilter.join('|'));
+  const url = window.location.origin + window.location.pathname + (p.toString() ? '?' + p.toString() : '');
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('share-btn');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '&#10003; Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    prompt('Copy this link:', url);
+  });
 }
 
 function toneClass(tone) {
@@ -495,6 +527,15 @@ function renderTable() {
     total.toLocaleString() + ' encounter' + (total !== 1 ? 's' : '');
   document.getElementById('empty-msg').style.display = total === 0 ? 'block' : 'none';
   document.querySelector('.table-wrap').style.display = total === 0 ? 'none' : '';
+  // Show Share button whenever any filter is active
+  const hasFilter = document.getElementById('kw-search').value.trim() ||
+    document.getElementById('f-channel').value ||
+    document.getElementById('f-tone').value ||
+    document.getElementById('f-region').value ||
+    document.getElementById('f-month').value ||
+    document.getElementById('f-strange').value ||
+    _behaviorsAnyFilter.length > 0;
+  document.getElementById('share-btn').style.display = hasFilter ? 'inline-block' : 'none';
 
   tbody.innerHTML = slice.map(s => {
     // Per-sighting deep link with timestamp label
