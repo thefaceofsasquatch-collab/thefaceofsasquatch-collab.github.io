@@ -209,7 +209,7 @@ td{padding:10px 12px;vertical-align:top}
   <div class="controls">
     <div class="search-wrap">
       <span class="icon">⌕</span>
-      <input type="text" id="kw-search" placeholder="Search behaviors, region, channel, notes…" oninput="applyFilters()">
+      <input type="text" id="kw-search" placeholder="Search behaviors, region, channel, notes…" oninput="_behaviorsAnyFilter=[];applyFilters()">
     </div>
     <select id="f-channel" onchange="applyFilters()"><option value="">All Channels</option></select>
     <select id="f-tone"    onchange="applyFilters()"><option value="">All Tones</option></select>
