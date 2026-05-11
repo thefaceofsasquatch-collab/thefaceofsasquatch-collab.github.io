@@ -14,6 +14,15 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;padding:24px 16px 48px}
+  /* ── Sticky quick-nav bar ── */
+  .quick-nav{position:sticky;top:0;z-index:200;background:#0d1117;border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.5)}
+  .qn-btn{display:inline-block;padding:7px 16px;border-radius:20px;font-size:12px;font-weight:700;text-decoration:none;letter-spacing:.3px;border:1.5px solid transparent;transition:all .15s;white-space:nowrap}
+  .qn-browser{background:#1a2233;color:#58a6ff;border-color:#58a6ff}
+  .qn-browser:hover{background:#1e2d47}
+  .qn-latest{background:#1a2a1a;color:#3fb950;border-color:#3fb950}
+  .qn-latest:hover{background:#1e3a1e}
+  .qn-discover{background:#1a1a2e;color:#bc8cff;border-color:#bc8cff}
+  .qn-discover:hover{background:#221a3a}
   .header{text-align:center;padding:32px 16px 24px;border-bottom:1px solid var(--border);margin-bottom:28px}
   .header-inner{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
   .header-logo{width:80px;height:80px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 10px rgba(212,175,55,0.35))}
@@ -80,6 +89,13 @@
       <span class="live-badge">⬤ LIVE</span>
     </div>
   </div>
+</div>
+
+<!-- QUICK NAV BAR -->
+<div class="quick-nav">
+  <a class="qn-btn qn-browser" href="https://thefaceofsasquatch-collab.github.io/browser.html">&#128269; Encounter Browser</a>
+  <a class="qn-btn qn-latest" href="https://thefaceofsasquatch-collab.github.io/latest.html">&#9654; Latest Update</a>
+  <a class="qn-btn qn-discover" href="https://thefaceofsasquatch-collab.github.io/discover.html">&#127922; Discover</a>
 </div>
 
 <!-- KPI ROW -->
