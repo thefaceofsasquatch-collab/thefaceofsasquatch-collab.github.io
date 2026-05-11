@@ -443,14 +443,35 @@ function deepLinkLabel(ts) {
   return m + ':' + String(sec).padStart(2,'0');
 }
 
-// ── Build sequence ────────────────────────────────────────────────────────────
+// ── Build sequence (round-robin by channel so no two consecutive from same channel) ──
 function buildSequence() {
-  sequence = [];
+  // 1. Filter by active tone
+  const filtered = [];
   for (let i = 0; i < VIDEOS.length; i++) {
     const v = VIDEOS[i];
-    if (!activeTone || v.tone === activeTone) {
-      sequence.push(i);
+    if (!activeTone || v.tone === activeTone) filtered.push(i);
+  }
+
+  // 2. Group filtered indices by channel, preserving newest-first order within each channel
+  const channelQueues = {};
+  const channelOrder = [];
+  for (const i of filtered) {
+    const ch = VIDEOS[i].channel;
+    if (!channelQueues[ch]) {
+      channelQueues[ch] = [];
+      channelOrder.push(ch);
     }
+    channelQueues[ch].push(i);
+  }
+
+  // 3. Round-robin: take one from each channel in turn until all are exhausted
+  sequence = [];
+  let remaining = channelOrder.filter(ch => channelQueues[ch].length > 0);
+  while (remaining.length > 0) {
+    for (const ch of [...remaining]) {
+      sequence.push(channelQueues[ch].shift());
+    }
+    remaining = channelOrder.filter(ch => channelQueues[ch].length > 0);
   }
 }
 
