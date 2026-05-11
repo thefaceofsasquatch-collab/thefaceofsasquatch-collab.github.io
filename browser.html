@@ -423,6 +423,17 @@ const PAGE_SIZE = 50;
 // behaviors_any: pipe-separated list of canonical behavior names to match (any-of)
 let _behaviorsAnyFilter = [];
 
+function filterByTone(tone) {
+  const sel = document.getElementById('f-tone');
+  const match = Array.from(sel.options).find(o => o.value === tone);
+  if (match) {
+    sel.value = match.value;
+    _behaviorsAnyFilter = [];
+    applyFilters();
+    document.getElementById('view-sightings').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
 function applyFilters() {
   const kw  = document.getElementById('kw-search').value.trim().toLowerCase();
   const ch  = document.getElementById('f-channel').value;
@@ -571,7 +582,7 @@ function renderTable() {
         ${subj}
         ${deepLink ? `<a class="deep-link" href="${esc(deepLink)}" target="_blank">${linkLabel} →</a>` : ''}
       </td>
-      <td><span class="tone-pill ${toneClass(s.tone)}">${esc(s.tone)}</span></td>
+      <td><span class="tone-pill ${toneClass(s.tone)}" style="cursor:pointer" onclick="filterByTone('${esc(s.tone)}')" title="Filter by ${esc(s.tone)}">${esc(s.tone)}</span></td>
       <td style="font-size:11px;color:var(--muted)">${esc(s.region)}</td>
       <td><div class="chip-list">${behaviors}</div></td>
       <td><div class="chip-list">${strange}</div></td>
@@ -606,7 +617,7 @@ function renderTable() {
           <a href="${esc(s.url)}" target="_blank">${esc(truncate(s.title,80))}</a>
           <div class="ec-meta">${esc(s.channel)} &middot; ${esc(s.date)} &middot; ${esc(s.region)}</div>
         </div>
-        <span class="tone-pill ${toneClass(s.tone)}" style="flex-shrink:0">${esc(s.tone)}</span>
+        <span class="tone-pill ${toneClass(s.tone)}" style="flex-shrink:0;cursor:pointer" onclick="filterByTone('${esc(s.tone)}')" title="Filter by ${esc(s.tone)}">${esc(s.tone)}</span>
       </div>
       ${s.description ? `<div class="ec-desc">${esc(s.description)}</div>` : ''}
       ${subj}
