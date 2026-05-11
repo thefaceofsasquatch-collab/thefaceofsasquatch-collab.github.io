@@ -57,7 +57,7 @@
   .enc-title a{color:var(--blue);text-decoration:none;font-size:14px;font-weight:600;line-height:1.4;display:block}
   .enc-title a:hover{text-decoration:underline}
   .enc-meta{font-size:11px;color:var(--muted);margin-bottom:12px}
-  .enc-thumb{width:60%;max-width:240px;height:auto;border-radius:8px;margin-top:14px;display:block;background:#21262d}
+  .enc-thumb{width:100%;height:auto;border-radius:8px;margin-top:14px;display:block;background:#21262d}
 
   /* ── Sighting within card ── */
   .sighting-block{border-top:1px solid #21262d;padding-top:12px;margin-top:12px}
@@ -495,6 +495,7 @@ function renderCard() {
 
   // Build sighting blocks
   let sightingHtml = '';
+  let chipsHtml = '';
   v.sightings.forEach((s, i) => {
     const numLabel = nSightings > 1 ? `<div class="sight-num">Sighting ${i+1} of ${nSightings}</div>` : '';
     const desc = s.description
@@ -508,7 +509,8 @@ function renderCard() {
     const dl = s.timestamp_url
       ? `<a class="deep-link" href="${esc(s.timestamp_url)}" target="_blank" rel="noopener">&#9658; Deep Link @ ${deepLinkLabel(s.timestamp_seconds)} &#8594;</a>`
       : '';
-    sightingHtml += `<div class="sighting-block">${numLabel}${desc}${chipRows}${dl}</div>`;
+    sightingHtml += `<div class="sighting-block">${numLabel}${dl}${desc}</div>`;
+    chipsHtml += chipRows;
   });
 
   const regionStr = (v.region && v.region !== 'Unknown / Not stated' && v.region !== 'Unknown')
@@ -535,6 +537,7 @@ function renderCard() {
           loading="lazy"
           onerror="this.style.display='none'">
       </a>
+      ${chipsHtml}
     </div>`;
 
   // Progress
