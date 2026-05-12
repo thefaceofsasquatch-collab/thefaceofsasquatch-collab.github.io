@@ -106,12 +106,15 @@
   .nav-btn.rand:hover,.nav-btn.rand:active{background:#1e3a1e}
   .nav-progress{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;max-width:600px;margin-left:auto;margin-right:auto}
 
-  /* ── Random scope toggle ── */
-  .rand-scope{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:6px;max-width:600px;margin-left:auto;margin-right:auto}
-  .rand-label{font-size:10px;color:var(--muted)}
-  .scope-toggle{display:flex;background:#21262d;border:1px solid var(--border);border-radius:20px;overflow:hidden}
-  .scope-btn{padding:3px 12px;font-size:10px;font-weight:600;cursor:pointer;color:var(--muted);border:none;background:transparent;transition:all .15s;-webkit-tap-highlight-color:transparent}
-  .scope-btn.active{background:var(--green);color:#0d1117}
+  /* ── This Week Only pill ── */
+  .tp-week{background:#1a1a2e;color:#bc8cff;border-color:#4a2080}
+  .tp-week.active{border-color:#bc8cff;box-shadow:0 0 0 1px #bc8cff;background:#2a1a40;color:#e0c0ff}
+
+  /* ── Tag activation overlay ── */
+  .tag-toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.85);background:rgba(13,17,23,0.96);border:1.5px solid #bc8cff;border-radius:14px;padding:18px 28px;text-align:center;z-index:200;pointer-events:none;opacity:0;transition:opacity .18s,transform .18s}
+  .tag-toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  .tag-toast-name{font-size:15px;font-weight:700;color:#e0c0ff;margin-bottom:4px}
+  .tag-toast-count{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -136,7 +139,14 @@
     <span class="tone-pill tp-mix" onclick="setTone('Mixed')">Mixed</span>
     <span class="tone-pill tp-neu" onclick="setTone('Neutral')">Neutral</span>
     <span class="tone-pill tp-pos" onclick="setTone('Positive')">Positive</span>
+    <span class="tone-pill tp-week" id="pill-week" onclick="toggleWeek()">This Week</span>
   </div>
+</div>
+
+<!-- TAG TOAST -->
+<div class="tag-toast" id="tag-toast">
+  <div class="tag-toast-name" id="tag-toast-name"></div>
+  <div class="tag-toast-count" id="tag-toast-count"></div>
 </div>
 
 <!-- CARD AREA -->
@@ -159,13 +169,7 @@
     <button class="nav-btn" id="btn-next" onclick="navigate(1)">Next →</button>
   </div>
   <div class="nav-progress" id="nav-progress"></div>
-  <div class="rand-scope">
-    <span class="rand-label">Random from:</span>
-    <div class="scope-toggle">
-      <span class="scope-btn active" id="scope-all" onclick="setScope('all')">All</span>
-      <span class="scope-btn" id="scope-new" onclick="setScope('newest')">Newest</span>
-    </div>
-  </div>
+
 </div>
 
 <script>
@@ -423,8 +427,9 @@ const LATEST_RUN_DATE = "2026-05-10";
 // ── State ─────────────────────────────────────────────────────────────────────
 let activeTone  = '';
 let activeTag   = '';   // behavior or strangeness tag filter
-let randScope   = 'all';
-let sequence    = [];   // filtered video indices into VIDEOS
+let thisWeekOnly = false; // This Week Only pill
+let sequence    = [];   // filtered video indices into VIDEOS (round-robin, for Next/Back)
+let flatPool    = [];   // flat unordered pool for Random (all matching videos)
 let currentIdx  = 0;    // index into sequence
 let navHistory  = [];   // stack of previously viewed sequence indices (for Back)
 
@@ -473,14 +478,18 @@ function videoHasTag(v, tag) {
 }
 
 function buildSequence() {
-  // 1. Filter by active tone AND active tag
+  // 1. Filter by active tone, active tag, and This Week Only
   const filtered = [];
   for (let i = 0; i < VIDEOS.length; i++) {
     const v = VIDEOS[i];
     if (activeTone && v.tone !== activeTone) continue;
     if (activeTag && !videoHasTag(v, activeTag)) continue;
+    if (thisWeekOnly && !v.is_newest) continue;
     filtered.push(i);
   }
+
+  // 1b. Build flat pool for Random (same filter, no ordering bias)
+  flatPool = [...filtered];
 
   // 2. Group filtered indices by channel, preserving newest-first order within each channel
   const channelQueues = {};
@@ -601,18 +610,23 @@ function goBack() {
 }
 
 function randomPick() {
-  if (sequence.length === 0) return;
-  let pool;
-  if (randScope === 'newest') {
-    pool = sequence.filter(i => VIDEOS[i].is_newest);
-    if (pool.length === 0) pool = sequence;
+  if (flatPool.length === 0) return;
+  // Draw from flat unordered pool — no ordering bias
+  const currentVidIdx = sequence[currentIdx];
+  const others = flatPool.filter(i => i !== currentVidIdx);
+  const pool = others.length > 0 ? others : flatPool;
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  // Find pick in sequence (or jump directly if not in sequence)
+  const seqPos = sequence.indexOf(pick);
+  if (seqPos >= 0) {
+    goTo(seqPos);
   } else {
-    pool = sequence;
+    navHistory.push(currentIdx);
+    // Insert pick into sequence at current position + 1 for continuity
+    sequence.splice(currentIdx + 1, 0, pick);
+    currentIdx = currentIdx + 1;
+    renderCard();
   }
-  // Avoid picking the same video we're already on
-  const others = pool.filter(i => i !== sequence[currentIdx]);
-  const pick = (others.length > 0 ? others : pool)[Math.floor(Math.random() * (others.length > 0 ? others : pool).length)];
-  goTo(sequence.indexOf(pick));
 }
 
 // ── Tone filter ───────────────────────────────────────────────────────────────
@@ -641,17 +655,25 @@ function filterByTag(tag) {
   }
   activeTag = tag;
   buildSequence();
-  // Count matching videos
-  const count = sequence.length;
-  // Jump to a random one
-  if (count > 0) {
-    currentIdx = Math.floor(Math.random() * count);
+  // Jump to a random video from the flat pool
+  if (flatPool.length > 0) {
+    const pick = flatPool[Math.floor(Math.random() * flatPool.length)];
+    currentIdx = Math.max(0, sequence.indexOf(pick));
   } else {
     currentIdx = 0;
   }
   navHistory = [];
   updateTagBanner();
+  showTagToast(tag, flatPool.length);
   renderCard();
+}
+
+function showTagToast(tag, count) {
+  const toast = document.getElementById('tag-toast');
+  document.getElementById('tag-toast-name').textContent = tag;
+  document.getElementById('tag-toast-count').textContent = count + ' video' + (count !== 1 ? 's' : '');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
 }
 
 function updateTagBanner() {
@@ -677,11 +699,14 @@ function clearTagFilter() {
   renderCard();
 }
 
-// ── Random scope toggle ───────────────────────────────────────────────────────
-function setScope(scope) {
-  randScope = scope;
-  document.getElementById('scope-all').classList.toggle('active', scope === 'all');
-  document.getElementById('scope-new').classList.toggle('active', scope === 'newest');
+// ── This Week Only toggle ────────────────────────────────────────────────────
+function toggleWeek() {
+  thisWeekOnly = !thisWeekOnly;
+  document.getElementById('pill-week').classList.toggle('active', thisWeekOnly);
+  buildSequence();
+  currentIdx = 0;
+  navHistory = [];
+  renderCard();
 }
 
 // ── Swipe support ─────────────────────────────────────────────────────────────
