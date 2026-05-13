@@ -354,8 +354,18 @@ function buildBehOptions() {
     const checked = _behaviorsAnyFilter.includes(name.toLowerCase());
     const div = document.createElement('div');
     div.className = 'beh-option' + (checked ? ' checked' : '');
-    div.innerHTML = `<input type="checkbox" ${checked ? 'checked' : ''} onchange="toggleBeh('${name.replace(/'/g,'\\'')}',this.checked)">
-      <span>${name}</span><span class="beh-cnt">${cnt}</span>`;
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = checked;
+    cb.addEventListener('change', function() { toggleBeh(name, this.checked); });
+    const lbl = document.createElement('span');
+    lbl.textContent = name;
+    const cnt_el = document.createElement('span');
+    cnt_el.className = 'beh-cnt';
+    cnt_el.textContent = cnt;
+    div.appendChild(cb);
+    div.appendChild(lbl);
+    div.appendChild(cnt_el);
     list.appendChild(div);
   });
 }
