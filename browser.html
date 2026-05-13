@@ -333,6 +333,9 @@ populateSelect('f-region',  FILTERS.regions);
 populateSelect('f-month',   FILTERS.months);
 
 // ── BEHAVIOR MULTI-PICKER ─────────────────────────────────────────────────────
+// behaviors_any: pipe-separated list of canonical behavior names to match (any-of)
+let _behaviorsAnyFilter = [];
+
 // Build the list of all canonical behaviors with counts from the sightings data
 const BEH_COUNTS = {};
 SIGHTINGS.forEach(s => {
@@ -517,9 +520,6 @@ let sortCol    = 'date';
 let sortDir    = -1; // -1 = desc, 1 = asc
 let currentPage = 1;
 const PAGE_SIZE = 50;
-
-// behaviors_any: pipe-separated list of canonical behavior names to match (any-of)
-let _behaviorsAnyFilter = [];
 
 function filterByTone(tone) {
   const sel = document.getElementById('f-tone');
