@@ -645,7 +645,6 @@ function renderCard() {
         <a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.title)}</a>
       </div>
       <div class="enc-meta">${bis.length > 0 ? bis.length + ' timestamped encounter' + (bis.length !== 1 ? 's' : '') : nSightings + ' sighting' + (nSightings !== 1 ? 's' : '')} in this video</div>
-      ${sightingHtml}
       <a href="${esc(v.url)}" target="_blank" rel="noopener">
         <img class="enc-thumb"
           src="https://img.youtube.com/vi/${esc(v.video_id)}/mqdefault.jpg"
@@ -653,6 +652,7 @@ function renderCard() {
           loading="lazy"
           onerror="this.style.display='none'">
       </a>
+      ${sightingHtml}
       ${chipsHtml}
     </div>`;
 
