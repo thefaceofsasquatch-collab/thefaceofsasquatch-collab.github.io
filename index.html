@@ -993,6 +993,10 @@
 
 <script>
 (function(){
+  // Read ?next= param — used when other pages redirect here for the splash
+  var params = new URLSearchParams(window.location.search);
+  var nextPage = params.get('next');
+
   // Show splash once per browser session
   if (!sessionStorage.getItem('fos_splash_seen')) {
     var overlay = document.getElementById('splash-overlay');
@@ -1013,12 +1017,18 @@
       sessionStorage.setItem('fos_splash_seen','1');
       overlay.style.transition = 'opacity 0.7s';
       overlay.style.opacity = '0';
-      setTimeout(function(){ overlay.style.display='none'; }, 700);
+      setTimeout(function(){
+        overlay.style.display = 'none';
+        if (nextPage) window.location.href = nextPage;
+      }, 700);
     }
     overlay.addEventListener('click', function(){
       clearInterval(iv);
       dismissSplash();
     });
+  } else if (nextPage) {
+    // Splash already seen this session — go straight to destination
+    window.location.replace(nextPage);
   }
 })();
 </script>

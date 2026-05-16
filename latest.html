@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  var PAGE = 'latest.html';
+  if (!sessionStorage.getItem('fos_splash_seen')) {
+    // Redirect to dashboard splash, passing this page as ?next=
+    window.location.replace('/?next=' + encodeURIComponent(PAGE));
+  }
+})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Face of Sasquatch — Latest Update May 15, 2026</title>
