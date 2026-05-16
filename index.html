@@ -85,7 +85,7 @@
       <div class="eyebrow">Intelligence Report</div>
       <h1>The Face of <span>Sasquatch</span></h1>
       <div class="subtitle">Cross-Channel Encounter Data Analysis · 26 Channels Monitored</div>
-      <span class="period-badge">Last Updated: May 15, 2026</span>
+      <span class="period-badge">Last Updated: May 16, 2026</span>
       <span class="live-badge">⬤ LIVE</span>
     </div>
   </div>
@@ -950,6 +950,78 @@
     </a>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SPLASH OVERLAY — shown once per browser session
+═══════════════════════════════════════════════════════════ -->
+<div id="splash-overlay" style="
+  display:none;
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;
+  background:#000;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+">
+  <img src="splash.png" alt="Sasquatch Encounter Intelligence" style="
+    width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;
+  ">
+  <div id="splash-enter" style="
+    position:relative;z-index:2;
+    margin-top:auto;margin-bottom:48px;
+    background:rgba(0,0,0,0.55);
+    border:1px solid rgba(212,175,55,0.6);
+    color:#d4af37;
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:1rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:12px 36px;
+    border-radius:4px;
+    cursor:pointer;
+    transition:background 0.2s;
+  ">Enter &rarr;</div>
+  <div id="splash-timer" style="
+    position:absolute;bottom:16px;right:20px;
+    color:rgba(255,255,255,0.45);
+    font-family:'Segoe UI',Arial,sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.1em;
+    z-index:2;
+  "></div>
+</div>
+
+<script>
+(function(){
+  // Show splash once per browser session
+  if (!sessionStorage.getItem('fos_splash_seen')) {
+    var overlay = document.getElementById('splash-overlay');
+    overlay.style.display = 'flex';
+    var timerEl = document.getElementById('splash-timer');
+    var countdown = 5;
+    timerEl.textContent = 'Entering in ' + countdown + '...';
+    var iv = setInterval(function(){
+      countdown--;
+      if (countdown <= 0) {
+        clearInterval(iv);
+        dismissSplash();
+      } else {
+        timerEl.textContent = 'Entering in ' + countdown + '...';
+      }
+    }, 1000);
+    function dismissSplash(){
+      sessionStorage.setItem('fos_splash_seen','1');
+      overlay.style.transition = 'opacity 0.7s';
+      overlay.style.opacity = '0';
+      setTimeout(function(){ overlay.style.display='none'; }, 700);
+    }
+    overlay.addEventListener('click', function(){
+      clearInterval(iv);
+      dismissSplash();
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
