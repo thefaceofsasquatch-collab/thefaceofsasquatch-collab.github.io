@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Encounter Browser — Help | SEI</title>
+<style>
+  :root {
+    --bg:       #0d1117;
+    --surface:  #161b22;
+    --border:   #30363d;
+    --text:     #e6edf3;
+    --muted:    #8b949e;
+    --accent:   #c9a227;
+    --green:    #3fb950;
+    --blue:     #58a6ff;
+    --purple:   #bc8cff;
+    --red:      #f85149;
+    --yellow:   #d29922;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  /* ── NAV ── */
+  .topnav {
+    background: #111827;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .topnav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: color .15s, border-color .15s;
+  }
+  .topnav a:hover { color: var(--text); border-color: #555; }
+  .topnav a.back  { color: var(--blue); border-color: var(--blue); background: #0d1e30; }
+  .topnav .title  { color: var(--accent); font-weight: 700; font-size: 15px; margin-right: auto; }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 36px 20px 80px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 36px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 40px;
+  }
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 18px 0 6px;
+  }
+  p { margin-bottom: 10px; color: var(--text); }
+  ul { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 5px; }
+
+  /* ── FEATURE CARDS ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .feature-card .fc-icon {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+  }
+  .feature-card .fc-title {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .feature-card .fc-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── FILTER TABLE ── */
+  .filter-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .filter-table th {
+    text-align: left;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #21262d;
+    vertical-align: top;
+  }
+  .filter-table tr:last-child td { border-bottom: none; }
+  .filter-table .label {
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .filter-table .desc { color: var(--muted); }
+  .filter-table .param {
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--green);
+    white-space: nowrap;
+  }
+
+  /* ── TONE PILLS ── */
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    margin: 2px 2px 2px 0;
+  }
+  .pill-neg  { background: #3d1a1a; color: var(--red); }
+  .pill-mix  { background: #3d2e0a; color: var(--yellow); }
+  .pill-neu  { background: #1e2630; color: var(--muted); }
+  .pill-pos  { background: #0d2e1a; color: var(--green); }
+
+  /* ── CHIPS ── */
+  .chip {
+    display: inline-block;
+    background: #21262d;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--text);
+    margin: 2px;
+  }
+  .chip-strange {
+    background: #1e1030;
+    border-color: #4a2080;
+    color: var(--purple);
+  }
+
+  /* ── URL EXAMPLE BOX ── */
+  .url-box {
+    background: #0d1e0d;
+    border: 1px solid #1a3a1a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--green);
+    word-break: break-all;
+    margin: 8px 0 14px;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: #1a1e26;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 12px 0;
+  }
+  .callout strong { color: var(--text); }
+
+  /* ── VIEW TABS ── */
+  .view-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .view-tab {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .view-tab.active { border-color: var(--blue); color: var(--blue); background: #0d1e30; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    h1 { font-size: 1.3rem; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .filter-table .param { display: block; margin-top: 3px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="topnav">
+  <span class="title">SEI — Encounter Browser Help</span>
+  <a class="back" href="browser.html">&#8592; Back to Browser</a>
+  <a href="index.html">&#8592; Dashboard</a>
+  <a href="discover.html" style="color:#bc8cff;border-color:#bc8cff;background:#1a1a2e">&#127922; Discover</a>
+  <a href="latest.html" style="color:#3fb950;border-color:#3fb950;background:#1a2a1a">&#9654; Latest Update</a>
+</div>
+
+<div class="page-wrap">
+
+  <h1>Encounter Browser — Help</h1>
+  <p class="subtitle">A complete guide to searching, filtering, and navigating the SEI Encounter Browser.</p>
+
+  <!-- ── OVERVIEW ── -->
+  <div class="section">
+    <h2>Overview</h2>
+    <p>The Encounter Browser is a searchable, filterable database of every Bigfoot encounter video analyzed by SEI. Each row in the database represents a single <strong>sighting account</strong> — one reported encounter within a video. A single video may contain multiple accounts, each with its own row.</p>
+    <p>The browser has three views, selectable from the tab bar at the top of the page:</p>
+    <div class="view-tabs">
+      <div class="view-tab active">Sightings Database</div>
+      <div class="view-tab">Channel Profiles</div>
+      <div class="view-tab">Channel Comparison</div>
+    </div>
+  </div>
+
+  <!-- ── VIEW 1: SIGHTINGS DATABASE ── -->
+  <div class="section">
+    <h2>View 1 — Sightings Database</h2>
+    <p>The default view. Shows every analyzed encounter as a table row (desktop) or card (mobile), with full filter and sort controls.</p>
+
+    <h3>Filters</h3>
+    <p>Use any combination of the controls in the filter bar to narrow results. All filters work together — results must match <em>all</em> active filters simultaneously.</p>
+
+    <table class="filter-table">
+      <thead>
+        <tr>
+          <th>Filter</th>
+          <th>What it does</th>
+          <th>URL Param</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label">&#8981; Search box</td>
+          <td class="desc">Free-text search across behaviors, region, channel name, and encounter notes. Partial matches work — typing "wood" will match "Wood Knocking".</td>
+          <td class="param">?kw=wood+knocking</td>
+        </tr>
+        <tr>
+          <td class="label">Channel</td>
+          <td class="desc">Filter to a single YouTube channel. Shows only encounters from that channel's videos.</td>
+          <td class="param">?channel=Sasquatch+Chronicles</td>
+        </tr>
+        <tr>
+          <td class="label">Tone</td>
+          <td class="desc">Filter by the overall emotional tone of the encounter account — Negative, Mixed, Neutral, or Positive.</td>
+          <td class="param">?tone=Negative</td>
+        </tr>
+        <tr>
+          <td class="label">Region</td>
+          <td class="desc">Filter by the geographic region where the encounter took place (e.g., Pacific Northwest, Southeast, Great Lakes).</td>
+          <td class="param">?region=Pacific+Northwest</td>
+        </tr>
+        <tr>
+          <td class="label">Month</td>
+          <td class="desc">Filter to encounters from videos published in a specific month (YYYY-MM format).</td>
+          <td class="param">?month=2026-04</td>
+        </tr>
+        <tr>
+          <td class="label">Strangeness</td>
+          <td class="desc">Show only encounters that include High Strangeness claims (e.g., cloaking, telepathy, orbs), or only those that do not.</td>
+          <td class="param">?strange=yes</td>
+        </tr>
+        <tr>
+          <td class="label">&#9776; Behaviors</td>
+          <td class="desc">Multi-select behavior picker. Choose one or more canonical behavior tags — results must include <strong>at least one</strong> of the selected behaviors (OR logic). A badge shows how many behaviors are active.</td>
+          <td class="param">?behaviors=Vocalizations|Wood+Knocking</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Tip:</strong> Clicking a behavior chip, strangeness chip, or tone pill anywhere in the results automatically applies that tag as a filter — no need to type it manually.
+    </div>
+
+    <h3>Sorting</h3>
+    <p>Click any column header to sort by that column. Click again to reverse the sort direction. An arrow indicator (▲ / ▼) shows the active sort. Sortable columns: <strong>Date</strong>, <strong>Channel</strong>, <strong>Tone</strong>, <strong>Region</strong>.</p>
+
+    <h3>Pagination</h3>
+    <p>Results are shown 50 per page. Use the <strong>‹ Prev</strong> and <strong>Next ›</strong> buttons or the numbered page buttons to navigate. The counter at the right shows your current range (e.g., "1–50 of 143").</p>
+
+    <h3>Result Count</h3>
+    <p>The badge next to the filter bar always shows how many encounters match your current filters. When no filters are active, it shows the total database size.</p>
+
+    <h3>Share Results</h3>
+    <p>The <strong>&#128279; Share Results</strong> button copies a shareable URL to your clipboard. The URL encodes all active filters as query parameters, so anyone who opens it will see the same filtered view. This works for all filter types including multi-select behaviors.</p>
+
+    <div class="url-box">https://thefaceofsasquatch-collab.github.io/browser.html?tone=Negative&amp;region=Pacific+Northwest&amp;behaviors=Vocalizations|Wood+Knocking</div>
+
+    <h3>Reading an Encounter Row</h3>
+    <p>Each row in the table (or card on mobile) contains:</p>
+    <ul>
+      <li><strong>Date</strong> — approximate publication date of the source video.</li>
+      <li><strong>Channel</strong> — the YouTube channel that published the video.</li>
+      <li><strong>Account / Video</strong> — the video title (links to YouTube), a brief AI-generated description of the encounter, subject description if available, and a deep link (see below).</li>
+      <li><strong>Tone</strong> — the emotional tone of the account. Click the pill to filter all encounters by that tone.
+        <br><span class="pill pill-neg">Negative</span>
+        <span class="pill pill-mix">Mixed</span>
+        <span class="pill pill-neu">Neutral</span>
+        <span class="pill pill-pos">Positive</span>
+      </li>
+      <li><strong>Region</strong> — geographic region of the encounter.</li>
+      <li><strong>Behaviors</strong> — canonical behavior tags identified in the account. Click any chip to filter all encounters by that behavior.
+        <br><span class="chip">Vocalizations</span><span class="chip">Wood Knocking</span><span class="chip">Paralleling / Walking Alongside</span>
+      </li>
+      <li><strong>High Strangeness</strong> — unusual or paranormal claims reported in the account (if any). Click any chip to filter.
+        <br><span class="chip chip-strange">Cloaking / Invisibility</span><span class="chip chip-strange">Telepathy / Mind Speak</span>
+      </li>
+    </ul>
+
+    <h3>Deep Links</h3>
+    <p>Where a precise timestamp has been identified for a behavior in the video, a <strong>Deep Link</strong> appears below the video title. Clicking it opens YouTube at the exact moment the behavior occurs — no scrubbing required.</p>
+    <p>If a video contains multiple sighting accounts, each account shows its own deep link labeled <strong>Account 1</strong>, <strong>Account 2</strong>, etc., with its individual timestamp.</p>
+
+    <h3>Clear Filters</h3>
+    <p>The <strong>Clear</strong> button resets all filters and the search box at once, returning to the full unfiltered database.</p>
+  </div>
+
+  <!-- ── VIEW 2: CHANNEL PROFILES ── -->
+  <div class="section">
+    <h2>View 2 — Channel Profiles</h2>
+    <p>A card grid showing a summary profile for every monitored YouTube channel. Use the search box at the top to filter channels by name.</p>
+    <p>Each profile card shows:</p>
+    <ul>
+      <li><strong>Video count</strong> and <strong>encounter count</strong> — total videos analyzed and sighting accounts found.</li>
+      <li><strong>Sighting rate</strong> — percentage of analyzed videos that contained at least one encounter account. Color-coded: green (≥ 50%), yellow (≥ 20%), red (below 20%).</li>
+      <li><strong>Top Behaviors</strong> — the most frequently observed behavior tags across all of the channel's encounters, with bar charts. Click any bar to jump to the Sightings Database filtered to that channel and behavior.</li>
+      <li><strong>Top Regions</strong> — the most common geographic regions for that channel's encounters. Click any bar to filter.</li>
+    </ul>
+    <div class="callout">
+      <strong>Tip:</strong> Clicking any bar in a Channel Profile card automatically switches to the Sightings Database view, pre-filtered to that channel and the selected tag.
+    </div>
+  </div>
+
+  <!-- ── VIEW 3: CHANNEL COMPARISON ── -->
+  <div class="section">
+    <h2>View 3 — Channel Comparison</h2>
+    <p>Side-by-side comparison of any two monitored channels. Select <strong>Channel A</strong> and <strong>Channel B</strong> from the dropdowns to populate the comparison cards.</p>
+    <p>Each comparison card shows:</p>
+    <ul>
+      <li><strong>Encounter Tone breakdown</strong> — bar chart of Negative / Mixed / Neutral / Positive counts and percentages.</li>
+      <li><strong>Top Behaviors</strong> — the 8 most common behavior tags with relative frequency bars.</li>
+      <li><strong>High Strangeness</strong> — the 6 most common strangeness claims.</li>
+      <li><strong>Top Regions</strong> — the 5 most common geographic regions.</li>
+      <li><strong>Evidence Types</strong> — the 5 most common forms of physical or circumstantial evidence mentioned.</li>
+    </ul>
+    <p>Click any bar in the comparison cards to drill into the Sightings Database filtered to that channel and tag.</p>
+  </div>
+
+  <!-- ── URL DEEP LINKING ── -->
+  <div class="section">
+    <h2>Deep Linking via URL Parameters</h2>
+    <p>The Encounter Browser supports full deep linking. Any combination of filters can be encoded in the URL and shared. When the page loads with URL parameters, the filters are applied automatically and the Sightings Database view is shown.</p>
+
+    <table class="filter-table">
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Example value</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="param">?kw=</td>
+          <td class="desc">wood knocking</td>
+          <td class="desc">Free-text keyword search</td>
+        </tr>
+        <tr>
+          <td class="param">?channel=</td>
+          <td class="desc">Sasquatch Chronicles</td>
+          <td class="desc">Must match channel name exactly (case-insensitive)</td>
+        </tr>
+        <tr>
+          <td class="param">?tone=</td>
+          <td class="desc">Negative</td>
+          <td class="desc">Negative, Mixed, Neutral, or Positive</td>
+        </tr>
+        <tr>
+          <td class="param">?region=</td>
+          <td class="desc">Pacific Northwest</td>
+          <td class="desc">Must match a region name in the dropdown</td>
+        </tr>
+        <tr>
+          <td class="param">?month=</td>
+          <td class="desc">2026-04</td>
+          <td class="desc">YYYY-MM format</td>
+        </tr>
+        <tr>
+          <td class="param">?strange=</td>
+          <td class="desc">yes</td>
+          <td class="desc"><code>yes</code> or <code>no</code></td>
+        </tr>
+        <tr>
+          <td class="param">?behaviors=</td>
+          <td class="desc">Vocalizations|Wood Knocking</td>
+          <td class="desc">Pipe-separated list of canonical behavior tag names (OR logic)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Use the <strong>&#128279; Share Results</strong> button to generate these URLs automatically — no need to construct them by hand.</p>
+  </div>
+
+  <!-- ── GLOSSARY ── -->
+  <div class="section">
+    <h2>Glossary</h2>
+
+    <h3>Encounter / Sighting Account</h3>
+    <p>A single first-person or witnessed report of a Bigfoot encounter within a video. One video may contain multiple accounts (e.g., a call-in show with several callers). Each account is analyzed and stored separately.</p>
+
+    <h3>Tone</h3>
+    <p>The overall emotional character of the encounter as reported by the witness:</p>
+    <ul>
+      <li><span class="pill pill-neg">Negative</span> — frightening, threatening, or distressing encounter.</li>
+      <li><span class="pill pill-mix">Mixed</span> — elements of both fear and curiosity, awe, or positive feeling.</li>
+      <li><span class="pill pill-neu">Neutral</span> — matter-of-fact observation with no strong emotional response.</li>
+      <li><span class="pill pill-pos">Positive</span> — peaceful, curious, or uplifting encounter.</li>
+    </ul>
+
+    <h3>Behaviors</h3>
+    <p>Canonical tags describing specific actions or activities observed during the encounter — for example: <span class="chip">Vocalizations</span> <span class="chip">Wood Knocking</span> <span class="chip">Rock Throwing</span> <span class="chip">Paralleling / Walking Alongside</span>. Tags are standardized across all videos so that cross-channel comparisons are meaningful.</p>
+
+    <h3>High Strangeness</h3>
+    <p>Claims that go beyond a straightforward physical sighting — for example: <span class="chip chip-strange">Cloaking / Invisibility</span> <span class="chip chip-strange">Telepathy / Mind Speak</span> <span class="chip chip-strange">Orbs / Light Phenomena</span>. These are recorded as reported by the witness without editorial judgment.</p>
+
+    <h3>Deep Link</h3>
+    <p>A YouTube URL with a <code>?t=</code> timestamp parameter that jumps directly to the moment a specific behavior or encounter occurs in the video. Generated from AI analysis of the video transcript.</p>
+
+    <h3>Sighting Rate</h3>
+    <p>The percentage of a channel's analyzed videos that contained at least one confirmed encounter account. A high sighting rate indicates a channel that consistently features first-hand reports.</p>
+  </div>
+
+  <!-- ── TIPS ── -->
+  <div class="section">
+    <h2>Tips &amp; Tricks</h2>
+    <ul>
+      <li><strong>Click any chip or pill</strong> in the results to instantly filter by that tag — behavior chips, strangeness chips, and tone pills are all clickable.</li>
+      <li><strong>Combine filters</strong> freely — for example, filter to Pacific Northwest + Negative tone + Vocalizations behavior to find the most intense reported encounters in that region.</li>
+      <li><strong>Use the Behaviors picker</strong> to select multiple behaviors at once. The OR logic means you'll see encounters that have <em>any</em> of the selected behaviors — useful for exploring related tags together.</li>
+      <li><strong>Share Results</strong> encodes your entire filter state into a URL. Use it to bookmark a search or share a specific filtered view with others.</li>
+      <li><strong>Channel Comparison</strong> is useful for spotting differences in tone, regional focus, and behavior frequency between channels — for example, comparing a wilderness encounter channel against a habituation-focused one.</li>
+      <li><strong>Deep links</strong> save significant time when researching a specific behavior — click to jump straight to the relevant moment in the video rather than watching the whole thing.</li>
+    </ul>
+  </div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
