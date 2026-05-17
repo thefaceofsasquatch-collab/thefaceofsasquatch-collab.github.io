@@ -759,10 +759,8 @@
   } else if (nextPage) {
     // Splash already seen this session — go straight to destination
     window.location.replace(nextPage);
-  } else {
-    // Splash already seen and no next param — go to Discover
-    window.location.replace('discover.html');
   }
+  // If splash already seen and no ?next= param, do nothing — show the dashboard normally
 })();
 </script>
 
