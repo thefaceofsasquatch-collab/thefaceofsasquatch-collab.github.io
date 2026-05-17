@@ -124,6 +124,26 @@
   .tag-toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
   .tag-toast-name{font-size:15px;font-weight:700;color:#e0c0ff;margin-bottom:4px}
   .tag-toast-count{font-size:12px;color:var(--muted)}
+
+  /* ── Help button ── */
+  .help-btn{flex-shrink:0;background:none;border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;font-weight:700;padding:5px 10px;cursor:pointer;letter-spacing:.3px;transition:all .15s;-webkit-tap-highlight-color:transparent}
+  .help-btn:hover,.help-btn:active{color:var(--accent);border-color:var(--accent)}
+
+  /* ── Help modal ── */
+  .help-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:16px}
+  .help-overlay.open{display:flex}
+  .help-modal{background:#161b22;border:1px solid var(--border);border-radius:14px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 20px 28px;position:relative}
+  .help-modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:color .15s}
+  .help-modal-close:hover{color:var(--text)}
+  .help-modal h2{font-family:'Cinzel',serif;color:var(--accent);font-size:16px;margin-bottom:4px}
+  .help-modal .help-intro{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+  .help-modal h3{font-size:12px;font-weight:700;color:var(--text);letter-spacing:.5px;text-transform:uppercase;margin:16px 0 8px;border-bottom:1px solid var(--border);padding-bottom:6px}
+  .help-modal ul{list-style:none;padding:0;margin:0 0 8px}
+  .help-modal ul li{font-size:12px;color:#adbac7;line-height:1.7;padding:3px 0 3px 14px;position:relative}
+  .help-modal ul li::before{content:'•';position:absolute;left:0;color:var(--accent)}
+  .help-modal .help-tip{background:#0d1117;border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:10px 14px;margin:10px 0;font-size:12px;color:#adbac7;line-height:1.6}
+  .help-modal .help-tip strong{color:var(--text)}
+  .help-modal .help-footer{font-size:10px;color:var(--muted);margin-top:18px;padding-top:12px;border-top:1px solid var(--border);line-height:1.6;font-style:italic}
 </style>
 </head>
 <body>
@@ -137,6 +157,7 @@
       <div class="hdr-sub">Last Updated: May 17, 2026</div>
     </div>
     <div class="hdr-dash"><a href="https://thefaceofsasquatch-collab.github.io/">← Dashboard</a></div>
+    <button class="help-btn" onclick="document.getElementById('help-overlay').classList.add('open')">? Help</button>
   </div>
 </div>
 
@@ -819,9 +840,56 @@ document.addEventListener('touchend', e => {
   }
 }, {passive: true});
 
-// ── Init ──────────────────────────────────────────────────────────────────────
+// ── Init ────────────────────────────────────────────────────────────────────────────────
 buildSequence();
 renderCard();
+
+// Close help modal on overlay click
+document.getElementById('help-overlay').addEventListener('click', function(e){
+  if (e.target === this) this.classList.remove('open');
+});
 </script>
+
+<!-- HELP MODAL -->
+<div class="help-overlay" id="help-overlay">
+  <div class="help-modal">
+    <button class="help-modal-close" onclick="document.getElementById('help-overlay').classList.remove('open')">&times;</button>
+    <h2>How to Use the Discover Page</h2>
+    <p class="help-intro">The Discover page is your starting point for exploring Bigfoot encounter accounts across all monitored YouTube channels. Each card represents a single video, with every individual encounter within it broken out and linked directly to that moment. Due to the vast scope of YouTube&rsquo;s Bigfoot library, videos are currently drawn from a curated set of preferred channels. Coverage will expand to include all Bigfoot channels in a future update.</p>
+
+    <h3>Reading an Encounter Card</h3>
+    <ul>
+      <li><strong>Channel name and date</strong> &mdash; which channel published the video and when</li>
+      <li><strong>Video title</strong> &mdash; click to open the video on YouTube</li>
+      <li><strong>Region and tone</strong> &mdash; where the encounters took place, and whether the overall account is Negative (frightening or aggressive), Mixed, Neutral, or Positive</li>
+      <li><strong>Thumbnail</strong> &mdash; click to open the video on YouTube</li>
+      <li><strong>Timestamped encounters</strong> &mdash; each encounter in the video is listed individually, with:
+        <ul style="margin-top:4px;margin-left:12px">
+          <li>The encounter number (e.g., &ldquo;Encounter 3 of 9&rdquo;)</li>
+          <li>A &#9654; Deep Link button &mdash; click to jump directly to that moment in the video on YouTube</li>
+          <li>A behavior tag describing what the Sasquatch was doing (e.g., &ldquo;Stalking / Surveillance,&rdquo; &ldquo;Rock / Object Throwing&rdquo;)</li>
+          <li>A brief note describing what happened</li>
+        </ul>
+      </li>
+      <li><strong>Behavior chips</strong> &mdash; a summary of all behaviors observed across the video; click any chip to filter the page to other videos with that same behavior</li>
+    </ul>
+
+    <h3>Navigating the Page</h3>
+    <ul>
+      <li><strong>&larr; / &rarr; arrows</strong> to move between videos one at a time</li>
+      <li>A <strong>video counter</strong> showing your position (e.g., &ldquo;Video 12 of 309&rdquo;)</li>
+      <li>A <strong>This Week</strong> toggle to view only the most recently added videos</li>
+      <li>A <strong>behavior filter</strong> to jump directly to videos containing a specific behavior</li>
+    </ul>
+
+    <h3>Tips</h3>
+    <div class="help-tip"><strong>Use the Deep Links.</strong> Rather than watching an entire video, deep links let you jump straight to the moment a witness describes their encounter. A video with 9 encounters gives you 9 direct entry points.</div>
+    <div class="help-tip"><strong>Click behavior chips to explore patterns.</strong> If a behavior catches your attention &mdash; say, &ldquo;Paralleling / Walking Alongside&rdquo; &mdash; clicking that chip filters the page to every video in the database where that behavior was observed.</div>
+    <div class="help-tip"><strong>Toggle This Week</strong> to see only what was added in the most recent intake run, so you can stay current without re-reading older entries.</div>
+
+    <p class="help-footer">The Discover page is built from AI-assisted analysis of each video&rsquo;s transcript. Encounter details, timestamps, and behavior tags are extracted automatically and reviewed for consistency. All deep links go directly to the original YouTube video.</p>
+  </div>
+</div>
+
 </body>
 </html>

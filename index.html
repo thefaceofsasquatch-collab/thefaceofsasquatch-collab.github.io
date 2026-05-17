@@ -749,7 +749,7 @@
       overlay.style.opacity = '0';
       setTimeout(function(){
         overlay.style.display = 'none';
-        if (nextPage) window.location.href = nextPage;
+        window.location.href = nextPage || 'discover.html';
       }, 700);
     }
     overlay.addEventListener('click', function(){
@@ -759,6 +759,9 @@
   } else if (nextPage) {
     // Splash already seen this session — go straight to destination
     window.location.replace(nextPage);
+  } else {
+    // Splash already seen and no next param — go to Discover
+    window.location.replace('discover.html');
   }
 })();
 </script>
