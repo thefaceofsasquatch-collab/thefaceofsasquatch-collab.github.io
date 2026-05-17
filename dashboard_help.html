@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Help | SEI</title>
+<style>
+  :root {
+    --bg:      #0d1117;
+    --surface: #161b22;
+    --border:  #30363d;
+    --text:    #e6edf3;
+    --muted:   #8b949e;
+    --accent:  #c9a227;
+    --green:   #3fb950;
+    --blue:    #58a6ff;
+    --purple:  #bc8cff;
+    --red:     #f85149;
+    --amber:   #d29922;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  /* ── NAV ── */
+  .topnav {
+    background: #111827;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .topnav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: color .15s, border-color .15s;
+  }
+  .topnav a:hover { color: var(--text); border-color: #555; }
+  .topnav a.back  { color: var(--accent); border-color: var(--accent); background: #1a1a0d; }
+  .topnav .title  { color: var(--accent); font-weight: 700; font-size: 15px; margin-right: auto; }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 36px 20px 80px;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 36px;
+  }
+
+  /* ── SECTIONS ── */
+  .section { margin-bottom: 40px; }
+  h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 18px 0 6px;
+  }
+  p { margin-bottom: 10px; }
+  ul { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 6px; }
+
+  /* ── CLICKABLE ITEM TABLE ── */
+  .click-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .click-table th {
+    text-align: left;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .click-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #21262d;
+    vertical-align: top;
+  }
+  .click-table tr:last-child td { border-bottom: none; }
+  .click-table .item { font-weight: 600; color: var(--text); }
+  .click-table .where { font-size: 11px; color: var(--accent); }
+  .click-table .action { color: var(--muted); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: #1a1e26;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 12px 0;
+  }
+  .callout strong { color: var(--text); }
+
+  /* ── SECTION DIAGRAM ── */
+  .diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 12px 0 18px;
+    font-size: 12px;
+  }
+  .diagram .d-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid #21262d;
+  }
+  .diagram .d-row:last-child { border-bottom: none; }
+  .diagram .d-label {
+    min-width: 180px;
+    font-weight: 700;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+  .diagram .d-label .d-sub {
+    display: block;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+  .diagram .d-desc { color: var(--muted); line-height: 1.5; }
+
+  /* ── TONE PILLS ── */
+  .pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    margin: 2px 2px 2px 0;
+  }
+  .pill-neg { background: #3d1a1a; color: var(--red); }
+  .pill-mix { background: #3d2e0a; color: var(--amber); }
+  .pill-neu { background: #1e2630; color: var(--muted); }
+  .pill-pos { background: #0d2e1a; color: var(--green); }
+
+  /* ── CHIPS ── */
+  .chip {
+    display: inline-block;
+    background: #21262d;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--text);
+    margin: 2px;
+  }
+  .chip-strange {
+    background: #1e1030;
+    border-color: #4a2080;
+    color: var(--purple);
+  }
+
+  /* ── CURSOR HINT ── */
+  .cursor-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #1a2a1a;
+    border: 1px solid #2a4a2a;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    h1 { font-size: 1.3rem; }
+    .diagram .d-row { flex-direction: column; gap: 4px; }
+    .diagram .d-label { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="topnav">
+  <span class="title">SEI — Dashboard Help</span>
+  <a class="back" href="index.html">&#8592; Back to Dashboard</a>
+  <a href="browser.html" style="color:#58a6ff;border-color:#58a6ff;background:#0d1e30">&#128269; Encounter Browser</a>
+  <a href="discover.html" style="color:#bc8cff;border-color:#bc8cff;background:#1a1a2e">&#127922; Discover</a>
+  <a href="latest.html" style="color:#3fb950;border-color:#3fb950;background:#1a2a1a">&#9654; Latest Update</a>
+</div>
+
+<div class="page-wrap">
+
+  <h1>Dashboard — Help</h1>
+  <p class="subtitle">A guide to reading the SEI Intelligence Dashboard — including all the interactive elements that aren't obviously clickable.</p>
+
+  <!-- ── OVERVIEW ── -->
+  <div class="section">
+    <h2>What the Dashboard Is</h2>
+    <p>The Dashboard is a high-level intelligence summary of every Bigfoot encounter video SEI has analyzed. It shows aggregate statistics — tone distributions, behavior frequencies, regional patterns, subject descriptions — drawn from the full encounter database.</p>
+    <p>The Dashboard is read-only: it shows summaries, not individual encounters. To search or filter individual encounters, use the <strong>Encounter Browser</strong>. To see what was added in the most recent intake run, use <strong>Latest Update</strong>.</p>
+    <div class="callout">
+      <strong>Key insight:</strong> Many elements on the Dashboard are clickable and will take you directly to a pre-filtered view in the Encounter Browser. These links are not visually highlighted — look for the dotted underline on bar chart labels, or simply try clicking any number, tone box, or behavior label.
+    </div>
+  </div>
+
+  <!-- ── PAGE LAYOUT ── -->
+  <div class="section">
+    <h2>Page Layout</h2>
+    <p>The Dashboard is divided into sections from top to bottom:</p>
+    <div class="diagram">
+      <div class="d-row">
+        <div class="d-label">Header<span class="d-sub">Top of page</span></div>
+        <div class="d-desc">Platform name, logo, and the "Last Updated" date badge showing when the database was last refreshed.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">Quick Nav Bar<span class="d-sub">Below header</span></div>
+        <div class="d-desc">Three buttons — Encounter Browser, Latest Update, and Discover — for jumping to the other pages.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">KPI Cards<span class="d-sub">Four stat boxes</span></div>
+        <div class="d-desc">Top-line numbers: Encounter Videos, Reports Logged, Subjects Described, and Contact Events. The Contact Events number is clickable.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">Encounter Tone Analysis<span class="d-sub">Two cards</span></div>
+        <div class="d-desc">Tone distribution boxes (Negative / Mixed / Neutral / Positive) and a stacked bar chart. All four tone boxes are clickable.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">Behaviors &amp; High Strangeness<span class="d-sub">Two bar charts</span></div>
+        <div class="d-desc">Top reported behaviors and high strangeness claims, ranked by frequency. Every bar label is a clickable link.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">Regional Distribution &amp; Evidence<span class="d-sub">Two bar charts</span></div>
+        <div class="d-desc">Sightings by geographic region and evidence types reported. Every region label is a clickable link.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">Subject Profile<span class="d-sub">Two cards</span></div>
+        <div class="d-desc">Age distribution bar and hair/coat color chips. Informational only — not clickable.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">Monitored Channels<span class="d-sub">Pill list</span></div>
+        <div class="d-desc">All channels included in the analysis. Each channel pill links to that channel's YouTube page.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">From the Latest Update<span class="d-sub">Encounter cards</span></div>
+        <div class="d-desc">Rich cards for each encounter logged in the most recent intake run, with tone, region, behaviors, and deep links to specific video timestamps.</div>
+      </div>
+      <div class="d-row">
+        <div class="d-label">Account of the Month<span class="d-sub">Featured card</span></div>
+        <div class="d-desc">The highest-scoring encounter of the period by composite score (sightings × behaviors × strangeness). Includes a Watch link and a Browse link.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CLICKABLE ELEMENTS ── -->
+  <div class="section">
+    <h2>Everything That Is Clickable</h2>
+    <p>The following elements are interactive. Most open the Encounter Browser pre-filtered to the relevant data — no typing required.</p>
+
+    <table class="click-table">
+      <thead>
+        <tr>
+          <th>Element</th>
+          <th>Where</th>
+          <th>What happens when you click it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item">Contact Events number</td>
+          <td class="where">KPI Cards row</td>
+          <td class="action">Opens Encounter Browser filtered to all encounters involving direct physical contact (Physical Contact, Grabbing, Assault, Attack).</td>
+        </tr>
+        <tr>
+          <td class="item">Negative tone box</td>
+          <td class="where">Tone Distribution card</td>
+          <td class="action">Opens Encounter Browser filtered to Negative-tone encounters only.</td>
+        </tr>
+        <tr>
+          <td class="item">Mixed tone box</td>
+          <td class="where">Tone Distribution card</td>
+          <td class="action">Opens Encounter Browser filtered to Mixed-tone encounters only.</td>
+        </tr>
+        <tr>
+          <td class="item">Neutral tone box</td>
+          <td class="where">Tone Distribution card</td>
+          <td class="action">Opens Encounter Browser filtered to Neutral-tone encounters only.</td>
+        </tr>
+        <tr>
+          <td class="item">Positive tone box</td>
+          <td class="where">Tone Distribution card</td>
+          <td class="action">Opens Encounter Browser filtered to Positive-tone encounters only.</td>
+        </tr>
+        <tr>
+          <td class="item">Behavior bar labels</td>
+          <td class="where">Top Reported Behaviors chart</td>
+          <td class="action">Each label (e.g., "Vocalizations", "Wood Knocking") is a link. Opens Encounter Browser with that behavior as a keyword search, showing all encounters where it was observed. Look for the faint dotted underline.</td>
+        </tr>
+        <tr>
+          <td class="item">High Strangeness bar labels</td>
+          <td class="where">High Strangeness Claims chart</td>
+          <td class="action">Same as behaviors — each label links to the Encounter Browser filtered by that strangeness claim as a keyword search.</td>
+        </tr>
+        <tr>
+          <td class="item">Region bar labels</td>
+          <td class="where">Sightings by Region chart</td>
+          <td class="action">Opens Encounter Browser filtered to encounters from that geographic region (e.g., Pacific Northwest, Southeast).</td>
+        </tr>
+        <tr>
+          <td class="item">Evidence type bar labels</td>
+          <td class="where">Evidence Types Reported chart</td>
+          <td class="action">Opens Encounter Browser with that evidence type as a keyword search.</td>
+        </tr>
+        <tr>
+          <td class="item">Channel name pills</td>
+          <td class="where">Monitored Channels card</td>
+          <td class="action">Opens that channel's YouTube page in a new tab. The ▶ icon indicates a YouTube link.</td>
+        </tr>
+        <tr>
+          <td class="item">Video title links</td>
+          <td class="where">From the Latest Update cards</td>
+          <td class="action">Opens the YouTube video in a new tab.</td>
+        </tr>
+        <tr>
+          <td class="item">Deep Link buttons</td>
+          <td class="where">From the Latest Update cards</td>
+          <td class="action">Opens the YouTube video at the exact timestamp where the behavior or encounter occurs. Labeled "► Deep Link @ M:SS →".</td>
+        </tr>
+        <tr>
+          <td class="item">Watch the full account →</td>
+          <td class="where">Account of the Month card</td>
+          <td class="action">Opens the featured video on YouTube in a new tab.</td>
+        </tr>
+        <tr>
+          <td class="item">Browse all [Channel] encounters →</td>
+          <td class="where">Account of the Month card</td>
+          <td class="action">Opens the Encounter Browser pre-filtered to all encounters from that channel.</td>
+        </tr>
+        <tr>
+          <td class="item">Explore the Full Database →</td>
+          <td class="where">Bottom call-to-action</td>
+          <td class="action">Opens the Encounter Browser with no filters applied — the full database.</td>
+        </tr>
+        <tr>
+          <td class="item">Latest Update →</td>
+          <td class="where">Bottom call-to-action</td>
+          <td class="action">Goes to the Latest Update page.</td>
+        </tr>
+        <tr>
+          <td class="item">Discover</td>
+          <td class="where">Bottom call-to-action</td>
+          <td class="action">Goes to the Discover page.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>How to spot clickable bar labels:</strong> Hover over any label in a bar chart. If the cursor changes to a pointer and a faint dotted underline appears, it is a link to the Encounter Browser. The bar fills themselves are not clickable — only the text labels on the left.
+    </div>
+  </div>
+
+  <!-- ── READING THE CHARTS ── -->
+  <div class="section">
+    <h2>Reading the Charts</h2>
+
+    <h3>Tone Distribution Boxes</h3>
+    <p>Four boxes showing the count and percentage of encounter accounts classified by emotional tone:</p>
+    <ul>
+      <li><span class="pill pill-neg">Negative</span> — frightening, threatening, or distressing encounters.</li>
+      <li><span class="pill pill-mix">Mixed</span> — encounters with both fear and curiosity, awe, or positive feeling.</li>
+      <li><span class="pill pill-neu">Neutral</span> — matter-of-fact observations with no strong emotional response.</li>
+      <li><span class="pill pill-pos">Positive</span> — peaceful, curious, or uplifting encounters.</li>
+    </ul>
+    <p>The stacked bar chart to the right shows the same data as a proportional visual. Click any tone box to see those encounters in the Encounter Browser.</p>
+
+    <h3>Behavior and Strangeness Bar Charts</h3>
+    <p>Horizontal bar charts ranked by frequency. The bar length is proportional to the count relative to the most common item. The number on the right is the raw count of encounters where that behavior or claim was observed.</p>
+    <p><strong>Behaviors</strong> are standardized tags describing specific actions (e.g., Vocalizations, Wood Knocking, Paralleling / Walking Alongside). <strong>High Strangeness</strong> items are unusual or paranormal claims reported by witnesses (e.g., Cloaking / Invisibility, Telepathy / Mind Speak).</p>
+
+    <h3>Sightings by Region</h3>
+    <p>Geographic regions where encounters took place, ranked by count. Each bar uses a distinct color for readability. Click any region label to see all encounters from that region in the Encounter Browser.</p>
+
+    <h3>Subject Age Distribution</h3>
+    <p>A stacked bar showing the proportion of described subjects classified as Adult, Juvenile, or Unknown age. This is based on witness descriptions extracted from video transcripts — many encounters do not include age information, so Unknown is typically the largest segment.</p>
+
+    <h3>Hair / Coat Color</h3>
+    <p>Colored chips showing the distribution of reported hair or coat colors across all described subjects. Colors are extracted directly from witness descriptions.</p>
+  </div>
+
+  <!-- ── FROM THE LATEST UPDATE ── -->
+  <div class="section">
+    <h2>From the Latest Update — Encounter Cards</h2>
+    <p>This section shows a rich card for each encounter logged in the most recent weekly intake run. Each card includes:</p>
+    <ul>
+      <li><strong>Video title</strong> — links to YouTube.</li>
+      <li><strong>Channel name, date, and region</strong> — metadata for the encounter.</li>
+      <li><strong>Tone badge</strong> — color-coded emotional tone of the account.</li>
+      <li><strong>AI-generated description</strong> — a brief summary of the encounter in italics.</li>
+      <li><strong>Behavior chips</strong> — <span class="chip">Vocalizations</span> <span class="chip">Wood Knocking</span> — tags for observed behaviors.</li>
+      <li><strong>High Strangeness chips</strong> — <span class="chip chip-strange">Cloaking / Invisibility</span> — if any unusual claims were reported.</li>
+      <li><strong>Deep Link</strong> — a timestamped YouTube link jumping to the exact moment of the encounter in the video. Labeled "► Deep Link @ M:SS →".</li>
+    </ul>
+    <p>If a video contains multiple sighting accounts, each account appears as a separate card with its own deep link.</p>
+  </div>
+
+  <!-- ── ACCOUNT OF THE MONTH ── -->
+  <div class="section">
+    <h2>Account of the Month</h2>
+    <p>The featured encounter at the bottom of the Dashboard is selected automatically by composite score: a formula that weights sighting count, behavior count, and high strangeness count to identify the most data-rich encounter of the period.</p>
+    <p>Two links appear on the card:</p>
+    <ul>
+      <li><strong>▶ Watch the full account →</strong> — opens the YouTube video.</li>
+      <li><strong>&#128269; Browse all [Channel] encounters →</strong> — opens the Encounter Browser pre-filtered to all encounters from that channel, so you can explore the full body of work.</li>
+    </ul>
+  </div>
+
+  <!-- ── NAVIGATION ── -->
+  <div class="section">
+    <h2>Navigating the Platform</h2>
+    <p>The Dashboard connects to three other pages via the Quick Nav Bar and the call-to-action section at the bottom:</p>
+    <table class="click-table">
+      <thead>
+        <tr><th>Page</th><th>What it's for</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="item" style="color:#58a6ff">&#128269; Encounter Browser</td>
+          <td class="action">Search and filter every individual encounter in the database. Sort by date, channel, tone, or region. Use behavior and strangeness filters. Share filtered URLs.</td>
+        </tr>
+        <tr>
+          <td class="item" style="color:#3fb950">&#9654; Latest Update</td>
+          <td class="action">A focused view of the most recent intake run — what was added, which channels were processed, and a summary of new encounters.</td>
+        </tr>
+        <tr>
+          <td class="item" style="color:#bc8cff">&#127922; Discover</td>
+          <td class="action">A curated browse experience — encounter cards with deep links organized by behavior, designed for exploration rather than search.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
