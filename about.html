@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About SEI | Sasquatch Encounter Intelligence</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+  :root {
+    --bg:      #0d1117;
+    --surface: #161b22;
+    --border:  #30363d;
+    --text:    #e6edf3;
+    --muted:   #8b949e;
+    --accent:  #c9a227;
+    --green:   #3fb950;
+    --blue:    #58a6ff;
+    --purple:  #bc8cff;
+    --red:     #f85149;
+    --amber:   #d29922;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  .topnav {
+    background: #111827;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .topnav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: color .15s, border-color .15s;
+  }
+  .topnav a:hover { color: var(--text); border-color: #555; }
+  .topnav a.back  { color: var(--accent); border-color: var(--accent); background: #1a1a0d; }
+  .topnav .title  { color: var(--accent); font-weight: 700; font-size: 15px; margin-right: auto; }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  h1 span { color: var(--accent); }
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 48px;
+    letter-spacing: 1px;
+  }
+
+  /* ── SECTIONS ── */
+  .section { margin-bottom: 56px; }
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+  }
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 32px 0 12px;
+  }
+  p { margin-bottom: 16px; }
+  ul { padding-left: 24px; margin-bottom: 16px; }
+  li { margin-bottom: 8px; }
+
+  /* ── CREATOR NOTE ── */
+  .creator-note {
+    background: linear-gradient(135deg, #1a1f2e, #161b22);
+    border: 1px solid var(--blue);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 48px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .creator-note h2 {
+    border: none;
+    color: var(--blue);
+    margin-bottom: 16px;
+    padding: 0;
+    font-size: 1.5rem;
+  }
+  .creator-note p {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .creator-note ul {
+    margin: 24px 0;
+    color: var(--text);
+  }
+  .creator-note li {
+    margin-bottom: 12px;
+    padding-left: 8px;
+  }
+  .creator-note li::marker {
+    color: var(--blue);
+  }
+  .signature {
+    margin-top: 32px;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  /* ── RELEASE NOTES ── */
+  .release-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .release-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .release-version {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+  }
+  .release-date {
+    font-size: 12px;
+    color: var(--muted);
+    background: #21262d;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .tag-new { background: #0d2e1a; color: var(--green); border: 1px solid #1a4a2a; }
+  .tag-fix { background: #3d1a1a; color: var(--red); border: 1px solid #5a2a2a; }
+  .tag-update { background: #1a2233; color: var(--blue); border: 1px solid #2a3a5a; }
+
+  /* ── FAQ ── */
+  .faq-item {
+    margin-bottom: 24px;
+  }
+  .faq-q {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .faq-a {
+    color: var(--muted);
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    background: #21262d;
+    padding: 16px 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    flex: 1;
+    min-width: 120px;
+  }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .stat-lbl {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    h1 { font-size: 1.8rem; }
+    .creator-note { padding: 24px 20px; }
+    .stats-bar { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="topnav">
+  <span class="title">SEI — About</span>
+  <a class="back" href="index.html">&#8592; Dashboard</a>
+  <a href="browser.html" style="color:#58a6ff;border-color:#58a6ff;background:#0d1e30">&#128269; Encounter Browser</a>
+  <a href="discover.html" style="color:#bc8cff;border-color:#bc8cff;background:#1a1a2e">&#127922; Discover</a>
+  <a href="latest.html" style="color:#3fb950;border-color:#3fb950;background:#1a2a1a">&#9654; Latest Update</a>
+</div>
+
+<div class="page-wrap">
+
+  <h1>About <span>SEI</span></h1>
+  <p class="subtitle">Sasquatch Encounter Intelligence Platform</p>
+
+  <!-- ── CREATOR NOTE ── -->
+  <div class="creator-note">
+    <h2>About This App | A note to content creators</h2>
+    <p>As someone who detests people stealing my imagery, the last thing I want to do is steal anyone else's IP. So I want to be straight with you about what this tool actually does.</p>
+    <p><strong>It doesn't share your content. It directs people to it.</strong></p>
+    <p>Here's what it actually does:</p>
+    <ul>
+      <li>Links go directly to the original YouTube source</li>
+      <li>The only thing it displays is thumbnails, the same way any link on any platform does</li>
+      <li>Your channel is credited by name throughout</li>
+      <li>It's essentially a deeper search than YouTube provides, using data you've already chosen to share publicly</li>
+      <li>Filters include encounter tone: negative, mixed, neutral, or positive (benevolent interactions would be positive) and behaviors like rock throwing, vocalizations, portals, and others</li>
+    </ul>
+    <p>Think of it like a movie review that doesn't give away spoilers. It points people toward content they'll want to find, without reproducing anything.</p>
+    <p>The goal is to be something enthusiasts and/or researchers find useful for discovering content they like and getting sent directly to creators like you.</p>
+    <p>No data is being taken. Just indexed and pointed back to the source.</p>
+    <p>If you have any concerns about how your channel appears, reach out. My intention is to be helpful, not harmful.</p>
+  </div>
+
+  <!-- ── PLATFORM STATS ── -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">421</div>
+      <div class="stat-lbl">Videos Analyzed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">334</div>
+      <div class="stat-lbl">Sightings Logged</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">26</div>
+      <div class="stat-lbl">Channels Monitored</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">31</div>
+      <div class="stat-lbl">Behavior Tags</div>
+    </div>
+  </div>
+
+  <!-- ── RELEASE NOTES ── -->
+  <div class="section">
+    <h2>Platform Updates &amp; Release Notes</h2>
+
+    <div class="release-card">
+      <div class="release-header">
+        <div class="release-version">Pre-Beta Update</div>
+        <div class="release-date">May 17, 2026</div>
+      </div>
+      <ul>
+        <li><span class="tag tag-new">New</span> <strong>Discover Page:</strong> A curated, visual browsing experience organized by behavior.</li>
+        <li><span class="tag tag-new">New</span> <strong>Multi-Select Behaviors:</strong> The Encounter Browser now supports selecting multiple behaviors at once (OR logic).</li>
+        <li><span class="tag tag-new">New</span> <strong>Deep Links:</strong> Videos with multiple accounts now show individual deep links for each account timestamp.</li>
+        <li><span class="tag tag-update">Update</span> <strong>Taxonomy Cleanup:</strong> Behavior tags have been consolidated into 31 canonical categories for better cross-channel comparison.</li>
+        <li><span class="tag tag-fix">Fix</span> <strong>Dashboard Accuracy:</strong> Fixed an issue where the dashboard was counting videos instead of individual sighting accounts.</li>
+      </ul>
+    </div>
+
+    <div class="release-card">
+      <div class="release-header">
+        <div class="release-version">Weekly Intake Run</div>
+        <div class="release-date">May 15, 2026</div>
+      </div>
+      <ul>
+        <li><span class="tag tag-update">Update</span> 23 new videos processed and added to the database.</li>
+        <li><span class="tag tag-new">New</span> Added monitoring for "A Flash of Beauty" channel.</li>
+      </ul>
+    </div>
+
+    <div class="release-card">
+      <div class="release-header">
+        <div class="release-version">Initial Database Build</div>
+        <div class="release-date">February 2026</div>
+      </div>
+      <ul>
+        <li><span class="tag tag-new">New</span> Core database established with historical data from 2014 to present.</li>
+        <li><span class="tag tag-new">New</span> Encounter Browser and Dashboard launched.</li>
+        <li><span class="tag tag-new">New</span> AI transcript analysis pipeline deployed for automated behavior tagging and timestamp extraction.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── FAQ ── -->
+  <div class="section">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">How does SEI get its data?</div>
+      <div class="faq-a">We use an automated pipeline to monitor specific YouTube channels. When a new video is published, we analyze the public transcript using AI to identify if it contains a first-hand encounter account. If it does, we extract the behaviors, tone, region, and exact timestamps, and add them to our database.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What is a "canonical behavior tag"?</div>
+      <div class="faq-a">Witnesses describe behaviors in many different ways (e.g., "knocking on wood", "tree knocks", "banging on a trunk"). We map all of these to a single canonical tag — in this case, <em>Wood Knocking</em>. This allows you to search across all channels and find every instance of a behavior, regardless of the exact words used.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Why do some videos have multiple accounts?</div>
+      <div class="faq-a">Many channels feature call-in shows or compilation episodes where several different witnesses share their stories in a single video. SEI treats each distinct story as a separate "sighting account" with its own row in the database and its own deep link.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How often is the database updated?</div>
+      <div class="faq-a">We run a weekly intake process that checks our monitored channels for new uploads and processes them automatically. Check the "Latest Update" page to see what was added in the most recent run.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I suggest a channel to monitor?</div>
+      <div class="faq-a">We are currently in a closed pre-beta phase and monitoring a specific set of channels to refine our taxonomy. A channel nomination form will be available in the future.</div>
+    </div>
+  </div>
+
+</div><!-- /page-wrap -->
+</body>
+</html>
