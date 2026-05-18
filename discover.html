@@ -87,6 +87,17 @@
   .tag-banner-browse{color:#d29922;text-decoration:none;font-weight:700;white-space:nowrap;font-size:11px}
   .tag-banner-browse:hover{text-decoration:underline}
   .tag-banner-clear{background:none;border:none;color:#8b949e;cursor:pointer;font-size:14px;padding:0 4px;line-height:1}
+  /* ── Active channel banner ── */
+  .ch-banner{display:none;align-items:center;justify-content:space-between;gap:8px;background:#0d1e30;border:1px solid #2a4a6a;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:#58a6ff;max-width:600px;margin-left:auto;margin-right:auto}
+  .ch-banner.visible{display:flex}
+  .ch-banner-text{flex:1;line-height:1.4}
+  .ch-banner-browse{color:#d29922;text-decoration:none;font-weight:700;white-space:nowrap;font-size:11px}
+  .ch-banner-browse:hover{text-decoration:underline}
+  .ch-banner-clear{background:none;border:none;color:#8b949e;cursor:pointer;font-size:14px;padding:0 4px;line-height:1}
+  /* ── Clickable channel name ── */
+  .enc-channel{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;display:inline-block}
+  .enc-channel:hover{color:#e8c84a;text-decoration:underline}
+  .enc-channel.ch-active{color:#58a6ff}
   .deep-link{display:inline-block;margin-top:4px;font-size:11px;color:#d29922;text-decoration:none;font-weight:600}
   .deep-link:hover{text-decoration:underline}
 
@@ -182,6 +193,11 @@
 
 <!-- CARD AREA -->
 <div class="card-area" id="card-area">
+  <div class="ch-banner" id="ch-banner">
+    <span class="ch-banner-text" id="ch-banner-text"></span>
+    <a class="ch-banner-browse" id="ch-banner-browse" href="browser.html">Browse in Encounter Browser →</a>
+    <button class="ch-banner-clear" onclick="clearChannelFilter()" title="Clear channel filter">×</button>
+  </div>
   <div class="tag-banner" id="tag-banner">
     <span class="tag-banner-text" id="tag-banner-text"></span>
     <a class="tag-banner-browse" id="tag-banner-browse" href="browser.html">Browse all →</a>
@@ -518,11 +534,12 @@ const VIDEOS = [
 ];
 const LATEST_RUN_DATE = "2026-05-17";
 
-// ── State ─────────────────────────────────────────────────────────────────────
-let activeTone  = '';
-let activeTag   = '';   // behavior or strangeness tag filter
-let thisWeekOnly = false; // This Week Only pill
-let sequence    = [];   // filtered video indices into VIDEOS (round-robin, for Next/Back)
+// ── State ───────────────────────────────────────────────────────────────────────────────────
+let activeTone    = '';
+let activeTag     = '';   // behavior or strangeness tag filter
+let activeChannel = '';   // channel name filter
+let thisWeekOnly  = false; // This Week Only pill
+let sequence      = [];   // filtered video indices into VIDEOS (round-robin, for Next/Back)
 let flatPool    = [];   // flat unordered pool for Random (all matching videos)
 let currentIdx  = 0;    // index into sequence
 let navHistory  = [];   // stack of previously viewed sequence indices (for Back)
@@ -572,12 +589,13 @@ function videoHasTag(v, tag) {
 }
 
 function buildSequence() {
-  // 1. Filter by active tone, active tag, and This Week Only
+  // 1. Filter by active tone, active tag, active channel, and This Week Only
   const filtered = [];
   for (let i = 0; i < VIDEOS.length; i++) {
     const v = VIDEOS[i];
     if (activeTone && v.tone !== activeTone) continue;
     if (activeTag && !videoHasTag(v, activeTag)) continue;
+    if (activeChannel && v.channel !== activeChannel) continue;
     if (thisWeekOnly && !v.is_newest) continue;
     filtered.push(i);
   }
@@ -614,7 +632,10 @@ function renderCard() {
   const prog = document.getElementById('nav-progress');
 
   if (sequence.length === 0) {
-    wrap.innerHTML = `<div class="empty-state"><h3>No Encounters</h3><p>No videos match the selected tone filter.</p></div>`;
+    const emptyMsg = activeChannel
+      ? `Showing only <strong>${esc(activeChannel)}</strong> — no videos match the current filters.`
+      : 'No videos match the selected filters.';
+    wrap.innerHTML = `<div class="empty-state"><h3>No Encounters</h3><p>${emptyMsg}</p></div>`;
     prog.textContent = '';
     document.getElementById('btn-back').disabled = true;
     document.getElementById('btn-next').disabled = true;
@@ -674,7 +695,7 @@ function renderCard() {
     <div class="enc-card">
       <div class="enc-header">
         <div>
-          <div class="enc-channel">${esc(v.channel)}</div>
+          <div class="enc-channel${activeChannel === v.channel ? ' ch-active' : ''}" onclick="setChannel('${esc(v.channel)}')" title="Click to filter by this channel">${esc(v.channel)}</div>
           <div class="enc-date">${fmtDate(v.date)}${regionStr}</div>
         </div>
         ${tonePill(v.tone)}
@@ -813,6 +834,44 @@ function clearTagFilter() {
   currentIdx = 0;
   navHistory = [];
   renderCard();
+}
+
+// ── Channel filter ───────────────────────────────────────────────────────────────────────────────────
+function setChannel(ch) {
+  if (activeChannel === ch) {
+    // Tapping the same channel again clears the filter
+    clearChannelFilter();
+    return;
+  }
+  activeChannel = ch;
+  buildSequence();
+  currentIdx = 0;
+  navHistory = [];
+  updateChannelBanner();
+  renderCard();
+}
+
+function clearChannelFilter() {
+  activeChannel = '';
+  updateChannelBanner();
+  buildSequence();
+  currentIdx = 0;
+  navHistory = [];
+  renderCard();
+}
+
+function updateChannelBanner() {
+  const banner = document.getElementById('ch-banner');
+  if (!activeChannel) {
+    banner.classList.remove('visible');
+    return;
+  }
+  const count = sequence.length;
+  const browseUrl = 'browser.html?channel=' + encodeURIComponent(activeChannel);
+  document.getElementById('ch-banner-text').innerHTML =
+    `&#128249; <strong>${esc(activeChannel)}</strong> &mdash; ${count} video${count !== 1 ? 's' : ''} in Discover`;
+  document.getElementById('ch-banner-browse').href = browseUrl;
+  banner.classList.add('visible');
 }
 
 // ── This Week Only toggle ────────────────────────────────────────────────────
