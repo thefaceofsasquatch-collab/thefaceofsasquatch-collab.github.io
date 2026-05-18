@@ -168,6 +168,7 @@
       <div class="hdr-sub">Last Updated: May 17, 2026</div>
     </div>
     <div class="hdr-dash"><a href="https://thefaceofsasquatch-collab.github.io/">← Dashboard</a></div>
+    <a class="help-btn" href="https://thefaceofsasquatch-collab.github.io/reports.html" style="text-decoration:none">Reports</a>
     <a class="help-btn" href="https://thefaceofsasquatch-collab.github.io/about.html" style="text-decoration:none">About</a>
     <button class="help-btn" onclick="document.getElementById('help-overlay').classList.add('open')">? Help</button>
   </div>
@@ -904,6 +905,28 @@ document.addEventListener('touchend', e => {
 buildSequence();
 renderCard();
 
+// ── FOS Auth gating ─────────────────────────────────────────────────────────────────────
+fosAuth.init().then(() => {
+  if (fosAuth.isBeta()) return; // full access
+  const MSG = 'Deep links jump you directly to the timestamped moment in the video. This feature is available to beta members. Enter your invite code to unlock.';
+  function lockDeepLinks() {
+    document.querySelectorAll('a.deep-link').forEach(el => {
+      if (el.dataset.fosLocked) return;
+      el.dataset.fosLocked = '1';
+      const href = el.getAttribute('href');
+      el.removeAttribute('href');
+      el.dataset.lockedHref = href;
+      el.style.cursor = 'pointer';
+      el.classList.add('fos-locked-link');
+      el.addEventListener('click', e => { e.preventDefault(); fosAuth.openModal(MSG); });
+    });
+  }
+  // Lock on initial render and after every card navigation
+  lockDeepLinks();
+  const origRender = window.renderCard;
+  window.renderCard = function() { origRender.apply(this, arguments); setTimeout(lockDeepLinks, 0); };
+});
+
 // Close help modal on overlay click
 document.getElementById('help-overlay').addEventListener('click', function(e){
   if (e.target === this) this.classList.remove('open');
@@ -951,5 +974,6 @@ document.getElementById('help-overlay').addEventListener('click', function(e){
   </div>
 </div>
 
+<script src="fos-auth.js"></script>
 </body>
 </html>

@@ -87,7 +87,7 @@
       <div class="eyebrow">Intelligence Report</div>
       <h1>The Face of <span>Sasquatch</span></h1>
       <div class="subtitle">Cross-Channel Encounter Data Analysis · 26 Channels Monitored</div>
-      <span class="period-badge">Last Updated: May 17, 2026</span>
+      <span class="period-badge">Last Updated: May 18, 2026</span>
       <span class="live-badge">⬤ LIVE</span>
     </div>
   </div>
@@ -99,6 +99,7 @@
   <a class="qn-btn qn-latest" href="https://thefaceofsasquatch-collab.github.io/latest.html">&#9654; Latest Update</a>
   <a class="qn-btn qn-discover" href="https://thefaceofsasquatch-collab.github.io/discover.html">&#127922; Discover</a>
   <a class="qn-btn qn-help" href="https://thefaceofsasquatch-collab.github.io/dashboard_help.html">? Help</a>
+  <a class="qn-btn" href="https://thefaceofsasquatch-collab.github.io/reports.html" style="background:#21262d;color:#8b949e;border-color:#30363d">Reports</a>
   <a class="qn-btn" href="https://thefaceofsasquatch-collab.github.io/about.html" style="background:#21262d;color:#8b949e;border-color:#30363d">About</a>
 </div>
 
@@ -766,6 +767,35 @@
   }
   // If splash already seen and no ?next= param, do nothing — show the dashboard normally
 })();
+</script>
+
+<script src="fos-auth.js"></script>
+<script>
+// ── FOS Auth gating on Dashboard ────────────────────────────────────────────────────────────────
+fosAuth.init().then(() => {
+  // Inject sign-in / beta badge into quick-nav
+  fosAuth.injectNavPill(document.querySelector('.quick-nav'));
+  if (fosAuth.isBeta()) return; // full access — nothing to lock
+
+  const MSG_BROWSER = 'The Encounter Browser lets you search and filter all logged sightings. This feature is available to beta members. Enter your invite code to unlock.';
+  const MSG_DEEP    = 'Deep links jump you directly to the timestamped moment in the video. This feature is available to beta members. Enter your invite code to unlock.';
+
+  // Gate all <a> links that point to browser.html
+  document.querySelectorAll('a[href*="browser.html"], a[href*="encounter_browser"]').forEach(el => {
+    el.removeAttribute('href');
+    el.style.cursor = 'pointer';
+    el.classList.add('fos-locked-link');
+    el.addEventListener('click', e => { e.preventDefault(); fosAuth.openModal(MSG_BROWSER); });
+  });
+
+  // Gate deep-link anchors in the Latest Update cards
+  document.querySelectorAll('a.deep-link').forEach(el => {
+    el.removeAttribute('href');
+    el.style.cursor = 'pointer';
+    el.classList.add('fos-locked-link');
+    el.addEventListener('click', e => { e.preventDefault(); fosAuth.openModal(MSG_DEEP); });
+  });
+});
 </script>
 
 </body>

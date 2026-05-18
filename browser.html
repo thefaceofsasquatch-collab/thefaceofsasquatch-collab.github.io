@@ -226,6 +226,7 @@ td{padding:10px 12px;vertical-align:top}
   <a class="nav-dashboard-link" href="https://thefaceofsasquatch-collab.github.io/latest.html" style="background:#1a2a1a;color:#3fb950;border:1px solid #3fb950">&#9654; Latest Update</a>
   <a class="nav-dashboard-link" href="https://thefaceofsasquatch-collab.github.io/discover.html" style="background:#1a1a2e;color:#bc8cff;border:1px solid #bc8cff">&#127922; Discover</a>
   <a class="nav-dashboard-link" href="https://thefaceofsasquatch-collab.github.io/browser_help.html" style="background:#1a2a1a;color:#c9a227;border:1px solid #c9a227">? Help</a>
+  <a class="nav-dashboard-link" href="https://thefaceofsasquatch-collab.github.io/reports.html" style="background:#21262d;color:#8b949e;border:1px solid #30363d">Reports</a>
   <a class="nav-dashboard-link" href="https://thefaceofsasquatch-collab.github.io/about.html" style="background:#21262d;color:#8b949e;border:1px solid #30363d">About</a>
 </div>
 
@@ -1008,6 +1009,26 @@ function truncate(s, n) {
 
 applyFilters();
 renderProfiles();
+
+// ── FOS Auth gating ───────────────────────────────────────────────────────────
+fosAuth.init().then(() => {
+  // Inject sign-in / beta badge into nav
+  fosAuth.injectNavPill(document.querySelector('.nav'));
+  if (fosAuth.isBeta()) return; // full access — nothing to lock
+
+  const MSG = 'Deep links jump you directly to the timestamped moment in the video. This feature is available to beta members. Enter your invite code to unlock.';
+
+  // Lock all deep-link anchors in the sightings table and mobile cards
+  document.querySelectorAll('a.deep-link, a.deep').forEach(el => {
+    const href = el.getAttribute('href');
+    el.removeAttribute('href');
+    el.dataset.lockedHref = href;
+    el.style.cursor = 'pointer';
+    el.classList.add('fos-locked-link');
+    el.addEventListener('click', e => { e.preventDefault(); fosAuth.openModal(MSG); });
+  });
+});
 </script>
+<script src="fos-auth.js"></script>
 </body>
 </html>
